@@ -4,12 +4,18 @@
   "description": "",
   "main": "build/server.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production ts-node './tools/build.ts'",
-    "dev": "cross-env NODE_ENV=development ts-node './tools/dev.ts'",
+    "build": "cross-env NODE_ENV=production RUNNER=build ts-node './src/index.ts'",
+    "dev": "cross-env NODE_ENV=development RUNNER=dev ts-node './src/index.ts'",
     "lint:fix": "eslint '+(src|tools)/**/*.{ts,tsx}' --fix"
   },
   "private": false,
-  "keywords": ["ssr", "graphql", "react", "apollo-server", "apollo-client"],
+  "keywords": [
+    "ssr",
+    "graphql",
+    "react",
+    "apollo-server",
+    "apollo-client"
+  ],
   "author": "Hao Tran",
   "license": "ISC",
   "devDependencies": {

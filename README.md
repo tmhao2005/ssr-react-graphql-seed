@@ -14,3 +14,13 @@ yarn dev
 ```sh
 yarn build
 ```
+
+### Build dir
+
+-------
+build
+- server.js
+- public
+-- assets
+--- client.js
+--- favicon.ico

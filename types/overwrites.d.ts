@@ -7,3 +7,10 @@ declare interface NodeModule {
     accept: (param: string, cb: () => void) => any;
   };
 }
+
+declare module NodeJS {
+  interface ProcessEnv {
+    PORT: number;
+    GRAPHQL: string;
+  }
+}

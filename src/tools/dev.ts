@@ -2,14 +2,14 @@ import express from "express";
 import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotServerMiddleware from "webpack-hot-server-middleware";
-import clientConfig from "./webpack/client";
-import serverConfig from "./webpack/server";
-import { common } from "./global";
+import clientConfig from "../webpack/client";
+import serverConfig from "../webpack/server";
+import { spinner } from "../shared/spinner";
 
 (async () => {
-  // common.spinner.start("Starting...");
+  spinner.start("Starting...");
   await start();
-  // common.spinner.stop();
+  spinner.stop();
 })();
 
 let server: express.Application;
@@ -38,7 +38,7 @@ async function start() {
     chunkName: "server",
   }));
 
-  server.listen(3000, () => console.log("server is running now"));
+  server.listen(process.env.PORT, () => console.log("server is running now"));
 
   return server;
 }
