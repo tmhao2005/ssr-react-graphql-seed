@@ -12,6 +12,7 @@ import { ApolloClient } from "apollo-boost";
 import { App } from "../components/App";
 import { Html } from "../view/ssr";
 import { resolvers, typeDefs } from "../graphql/book";
+
 import "../../images/favicon.ico";
 
 interface App extends express.Application {
@@ -38,6 +39,7 @@ const client = new ApolloClient({
 });
 
 //-----------------
+// server.js
 // public
 // - assets
 // -- client.js
@@ -100,8 +102,13 @@ server.applyMiddleware({
   app,
 });
 
-if (!__DEV__) {
-  app.listen(3000, () => console.log("The server is running with PROD mode"));
+// NOTE: webpack turns it to false as build
+const hot = !!module.hot;
+
+console.log("HMR enabled", hot);
+
+if (!hot) {
+  app.listen(PORT, () => console.log("The server is running on port %s", PORT));
 }
 
 export default function serverRenderer() {

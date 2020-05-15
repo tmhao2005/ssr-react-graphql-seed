@@ -4,7 +4,7 @@ import webpack from "webpack";
 const isDebug = process.env.NODE_ENV !== "production";
 const isVerbose = false;
 const ROOT_DIR = path.resolve(__dirname, "..", "..");
-const ASSET_PATH = isDebug ? "/assets/" : "/assets/";
+const ASSET_PATH = process.env.ASSET_PATH || "/assets/";
 
 export const resolvePath = (...args: string[]) => path.resolve(ROOT_DIR, ...args);
 
@@ -66,6 +66,8 @@ export default {
     new webpack.WatchIgnorePlugin([/css\.d\.ts$/]),
     new webpack.DefinePlugin({
       __DEV__: isDebug,
+      PORT: process.env.PORT,
+      GRAPHQL: JSON.stringify(process.env.GRAPHQL),
     }),
     isDebug && new webpack.HotModuleReplacementPlugin(),
   ].filter(Boolean),

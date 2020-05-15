@@ -1,12 +1,12 @@
 import webpack from "webpack";
-import clientConfig from "./webpack/client";
-import serverConfig from "./webpack/server";
-import { common } from "./global";
+import clientConfig from "../webpack/client";
+import serverConfig from "../webpack/server";
+import { spinner } from "../shared/spinner";
 
 (async () => {
-  common.spinner.start("Building...");
+  spinner.start("Building...");
   await bundle();
-  common.spinner.stop().succeed("Finished building");
+  spinner.stop().succeed("Finished building");
 })();
 
 function bundle() {
@@ -16,7 +16,7 @@ function bundle() {
         return reject(err);
       }
 
-      common.spinner.info(stats.toString(serverConfig.stats));
+      spinner.info(stats.toString(serverConfig.stats));
       return resolve();
     });
   });
