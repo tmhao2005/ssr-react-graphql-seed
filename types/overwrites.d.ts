@@ -4,7 +4,7 @@ declare interface Window {
 
 declare interface NodeModule {
   hot?: {
-    accept: (param: string, cb: () => void) => any;
+    accept: (param: string, cb?: () => void) => any;
   };
 }
 

@@ -1,6 +1,7 @@
 import express from "express";
 import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
+import webpackHotMiddleware from "webpack-hot-middleware";
 import webpackHotServerMiddleware from "webpack-hot-server-middleware";
 import clientConfig from "../webpack/client";
 import serverConfig from "../webpack/server";
@@ -18,6 +19,9 @@ async function start() {
   // Build a dev server
   server = express();
 
+  const clientEntry = clientConfig.entry as webpack.Entry;
+  clientEntry.client = ["webpack-hot-middleware/client"].concat(clientEntry.client);
+
   clientConfig.output.filename = (clientConfig.output.filename as string).replace("chunkhash", "hash");
   clientConfig.output.chunkFilename = clientConfig.output.chunkFilename.replace("chunkhash", "hash");
   clientConfig.module.rules = clientConfig.module.rules.filter(x => x.loader !== "null-loader");
@@ -28,6 +32,12 @@ async function start() {
 
   const multiCompiler = webpack([clientConfig, serverConfig]);
 
+  server.use(
+    webpackHotMiddleware(multiCompiler.compilers.find(compiler => compiler.name === "client"), {
+      publicPath: clientConfig.output.publicPath,
+      reload: true,
+    })
+  );
   server.use(
     webpackDevMiddleware(multiCompiler, {
       serverSideRender: true,

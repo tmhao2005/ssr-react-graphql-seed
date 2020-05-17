@@ -15,12 +15,12 @@ yarn dev
 yarn build
 ```
 
-### Build dir
+### Build dir would look like following:
 
--------
-build
-- server.js
-- public
--- assets
---- client.js
---- favicon.ico
+```
+// |- server.js
+// |- public
+// |--- assets
+// |--- client.js
+// |--- client.map.js
+```
