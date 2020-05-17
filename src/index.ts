@@ -9,8 +9,6 @@ if (parsed.error) {
   console.log("You don't have any env file");
 }
 
-console.log(parsed);
-
 if (!process.env.RUNNER) {
   console.error("No runner specified");
   process.exit(1);

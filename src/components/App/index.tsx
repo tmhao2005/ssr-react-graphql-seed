@@ -5,6 +5,7 @@ export const App: React.SFC = () => {
 
   return (
     <>
+      <h2>SSR + React + GraphQL</h2>
       <Books />
     </>
   )

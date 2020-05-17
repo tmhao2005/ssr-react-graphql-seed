@@ -16,11 +16,19 @@ const client = new ApolloClient({
   cache: new InMemoryCache().restore(window.__APOLLO_STATE__),
 });
 
-const root = document.getElementById("root");
+render();
 
-ReactDOM[root.innerHTML ? "hydrate" : "render"](
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
-  document.getElementById("root")
-);
+module.hot.accept("../components/App", () => {
+  render();
+});
+
+function render() {
+  const root = document.getElementById("root");
+
+  ReactDOM[root.innerHTML ? "hydrate" : "render"](
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>,
+    document.getElementById("root")
+  );
+}
