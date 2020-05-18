@@ -1,27 +1,47 @@
 import React from "react";
 import fetch from "node-fetch";
-import { renderer, State, SearchResult } from "./shared";
+import { renderer, State } from "./shared";
 
 interface Props {
   url: string;
 }
 
+interface Action {
+  type: string;
+  payload: State;
+}
+
+interface Reducer {
+  (state: State, action: Action): State;
+}
+
 // we can share this custom Hook too
 const useFetch = (props: Props): State => {
-  const [loading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState<SearchResult>();
+  const [state, dispatch] = React.useReducer<Reducer>((init, action) => {
+
+    return {
+      ...init,
+      ...action.payload,
+    }
+
+  }, {
+    loading: true,
+    data: undefined,
+   });
 
   React.useEffect(() => {
     fetch(props.url).then(data => data.json()).then(data => {
-      setData(data);
-      setLoading(false);
+      dispatch({
+        type: "ANY",
+        payload: {
+          loading: false,
+          data,
+        }
+      });
     });
   }, [props.url]);
 
-  return {
-    loading,
-    data,
-  }
+  return state;
 }
 
 export const FetchWithHook: React.FC<Props> = (props) => {
