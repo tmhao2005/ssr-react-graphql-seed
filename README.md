@@ -13,6 +13,12 @@ Try to provide the seed project for everyone can understand server side renderin
 - Eslint
 ```
 
+### GraphQL
+
+```
+  http://localhost:3000/graphql
+```
+
 ### Start
 
 ```sh
