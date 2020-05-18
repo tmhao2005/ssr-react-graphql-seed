@@ -13,8 +13,9 @@ import fetch from "node-fetch";
 import { App } from "../components/App";
 import { Html } from "../view/ssr";
 import { resolvers, typeDefs } from "../graphql/schema";
-import "../../images/favicon.ico";
 import { GitAPI } from "../graphql/api/github";
+
+import "../../images/favicon.ico";
 
 interface App extends express.Application {
   handle?: any;

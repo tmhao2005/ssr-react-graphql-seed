@@ -6,7 +6,7 @@ const onChange = (e: ChangeEvent<HTMLInputElement>) => {
   return e.target.value;
 }
 
-export const Books: React.SFC = () => {
+export const GitUsers: React.FC<{}> = () => {
   const ref = React.useRef<HTMLInputElement>();
   const [fn, keyword] = useThrottle(onChange, 1e3);
 
