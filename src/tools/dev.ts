@@ -3,6 +3,7 @@ import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import webpackHotServerMiddleware from "webpack-hot-server-middleware";
+import browserSync from "browser-sync";
 import clientConfig from "../webpack/client";
 import serverConfig from "../webpack/server";
 import { spinner } from "../shared/spinner";
@@ -24,6 +25,7 @@ async function start() {
 
   clientConfig.output.filename = (clientConfig.output.filename as string).replace("chunkhash", "hash");
   clientConfig.output.chunkFilename = clientConfig.output.chunkFilename.replace("chunkhash", "hash");
+  // Won't remvove any modules
   clientConfig.module.rules = clientConfig.module.rules.filter(x => x.loader !== "null-loader");
 
   serverConfig.output.hotUpdateMainFilename = "updates/[hash].hot-update.json";
@@ -44,11 +46,41 @@ async function start() {
     })
   );
 
-  server.use(webpackHotServerMiddleware(multiCompiler, {
-    chunkName: "server",
-  }));
+  server.use(
+    webpackHotServerMiddleware(multiCompiler, {
+      chunkName: "server",
+    })
+  );
 
-  server.listen(process.env.PORT, () => console.log("server is running now"));
+  await Promise.all([
+    webpackTask("client", multiCompiler),
+    webpackTask("server", multiCompiler),
+  ]);
+
+  await new Promise((resolve, reject) => {
+    browserSync.create().init({
+      open: true,
+      server: "build",
+      middleware: [server],
+      port: Number(process.env.PORT),
+    },
+    (error, bs) => (error ? reject(error) : resolve(bs))
+    );
+  });
 
   return server;
+}
+
+function webpackTask(name: string, multiCompiler: webpack.MultiCompiler) {
+  return new Promise((resolve, reject) => {
+    const compiler = multiCompiler.compilers.find(compiler => compiler.name === name);
+
+    compiler.hooks.done.tap(name, stats => {
+      if (stats.hasErrors()) {
+        reject(new Error("Compilation failed!"));
+      } else {
+        resolve(stats);
+      }
+    });
+  });
 }

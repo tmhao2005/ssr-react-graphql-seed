@@ -12,7 +12,7 @@ export const CLIENT_ENTRY = resolvePath("src/entry/client.tsx");
 export const SERVER_ENTRY = resolvePath("src/entry/server.tsx");
 export const BUILD_DIR = resolvePath("build");
 
-export default {
+const base = {
   mode: isDebug ? "development" : "production",
 
   output: {
@@ -92,3 +92,6 @@ export default {
 
   devtool: isDebug ? "source-map" : false,
 } as webpack.Configuration;
+
+export { base };
+export default base;

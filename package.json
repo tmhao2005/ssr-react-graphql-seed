@@ -4,9 +4,10 @@
   "description": "",
   "main": "build/server.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production RUNNER=build ts-node './src/index.ts'",
+    "build": "yarn clean:build && cross-env NODE_ENV=production RUNNER=build ts-node './src/index.ts'",
     "dev": "cross-env NODE_ENV=development RUNNER=dev ts-node './src/index.ts'",
-    "lint:fix": "eslint '+(src|tools)/**/*.{ts,tsx}' --fix"
+    "lint:fix": "eslint '+(src|tools)/**/*.{ts,tsx}' --fix",
+    "clean:build": "rimraf build"
   },
   "private": false,
   "keywords": [
@@ -23,11 +24,13 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
+    "@types/browser-sync": "^2.26.1",
     "@types/node": "^14.0.1",
     "@types/webpack": "^4.41.12",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "babel-loader": "^8.1.0",
+    "browser-sync": "^2.26.7",
     "chalk": "^4.0.0",
     "cross-env": "^7.0.2",
     "eslint": "^7.0.0",
