@@ -2,18 +2,14 @@ import path from "path";
 import express from "express";
 import React from "react";
 import ReactDOM from "react-dom/server";
-import { ApolloServer } from "apollo-server-express";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { makeExecutableSchema } from "graphql-tools";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { getDataFromTree } from "@apollo/react-ssr";
-import { ApolloClient } from "apollo-boost";
-import { createHttpLink } from "apollo-link-http";
-import fetch from "node-fetch";
+import { extractCritical } from "emotion-server";
+import { StaticRouter } from "react-router-dom";
 import { App } from "../components/App";
-import { Html } from "../view/ssr";
-import { resolvers, typeDefs } from "../graphql/schema";
-import { GitAPI } from "../graphql/api/github";
+import { Html } from "../view/html";
+import { buildClient } from "../graphql/client";
+import { buildServer } from "../graphql/server";
 
 import "../../images/favicon.ico";
 
@@ -23,35 +19,8 @@ interface App extends express.Application {
 
 const app: App = express();
 
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
-
-const server = new ApolloServer({
-  schema,
-  dataSources: () => {
-    return {
-      gitAPI: new GitAPI(),
-    }
-  }
-});
-
-const client = new ApolloClient({
-  ssrMode: true,
-  cache: new InMemoryCache(),
-  link: createHttpLink({
-    uri: GRAPHQL,
-    credentials: "same-origin",
-    headers: {},
-    fetch: fetch as any,
-  }),
-
-  // Won't work with dataSources, so we might stop using this
-  // link: new SchemaLink({
-  //   schema,
-  // }),
-});
+const client = buildClient(true);
+const server = buildServer();
 
 // Register `public` dir as public access so assets folder can be accessed
 // NOTE: webpack's configuration
@@ -85,9 +54,13 @@ app.get("*", async (req, res, next) => {
 
   addChunk("client");
 
+  const routerContext = {};
+
   const Root = (
     <ApolloProvider client={client}>
-      <App />
+      <StaticRouter location={req.url} context={routerContext} >
+        <App />
+      </StaticRouter>
     </ApolloProvider>
   );
 
@@ -96,14 +69,20 @@ app.get("*", async (req, res, next) => {
   const state = client.extract();
 
   const render = ReactDOM.renderToString(Root);
+  const { html: markup, css, ids } = extractCritical(render);
+
+  console.log(ids);
+
   const html = ReactDOM.renderToStaticMarkup(
     <Html
       title="React + GraphQL + SSR"
       description="A starter project"
-      children={render}
+      styles={[{ id: "css", cssText: css }]}
       scripts={Array.from<string>(scripts)}
       state={state}
-    />
+    >
+      {markup}
+    </Html>
   );
 
   res.status(200);

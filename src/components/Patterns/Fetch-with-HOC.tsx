@@ -14,13 +14,11 @@ export const withFetch = (Component: React.ComponentType<State>) => {
       this.state = {} as State;
     }
 
-    componentWillMount() {
+    componentDidMount() {
       this.setState({
         loading: true,
       });
-    }
 
-    componentDidMount() {
       this.doFetch();
     }
 

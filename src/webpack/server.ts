@@ -4,6 +4,7 @@ import { smart } from "webpack-merge";
 import base, { BUILD_DIR, SERVER_ENTRY } from "./base";
 import { AssestKeys } from "./client";
 
+const reScss = /\.(css|scss|sass)$/;
 const reImage = /\.(ico|jpg|jpeg|png|gif|eot|otf|svg|webp|ttf|woff|woff2)$/;
 
 const server = {
@@ -21,6 +22,17 @@ const server = {
   module: {
     rules: [
       {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1
+            },
+          },
+        ],
+      },
+      {
         test: reImage,
         loader: "file-loader",
         options: {
@@ -37,7 +49,9 @@ const server = {
   ],
   externals: [
     ...AssestKeys.map(key => `./${key}`),
-    nodeExternals(),
+    nodeExternals({
+      whitelist: [reScss, reImage],
+    }),
   ],
   node: {
     fs: "empty",

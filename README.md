@@ -13,6 +13,15 @@ Try to provide the seed project for everyone can understand server side renderin
 - Eslint
 ```
 
+### Enviroment variables
+
+Create your own `.env` file containing:
+
+```sh
+PORT=3000
+GRAPHQL=http://localhost:3000/graphql
+```
+
 ### GraphQL
 
 ```

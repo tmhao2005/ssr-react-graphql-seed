@@ -54,9 +54,6 @@ const Html = (props: HTMLProps) => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content={imageUrl} />
-        <link rel="icon" href="icon.png" sizes="192x192" />
-        <link rel="apple-touch-icon" href="icon.png" sizes="192x192" data-analytics="ui-link-appleTouchIcon" />
-        <link rel="apple-touch-icon" href="tile.png" sizes="558x558" data-analytics="ui-link-appleTouchIcon" />
         {noIndex && <meta name="robots" content="noindex" />}
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         {styleTags}

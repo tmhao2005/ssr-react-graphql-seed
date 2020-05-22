@@ -15,6 +15,16 @@ const client = {
     client: [CLIENT_ENTRY],
   },
   target: "web",
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          "css-loader",
+        ],
+      },
+    ],
+  },
   plugins: [
     new WebpackAssetsManifest({
       output: `${BUILD_DIR}/${AssestKeys[0]}`,

@@ -9,12 +9,12 @@ COPY package.json yarn.lock ./
 RUN yarn
 
 # Copy all file from current folder to working dir
-COPY ./build .
+# COPY ./build .
 
 # Port will be used needing to be exposed
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+# CMD ["node", "server.js"]
 
 # View logs
 # $ docker logs <YOUR_CONTAINER_ID>
