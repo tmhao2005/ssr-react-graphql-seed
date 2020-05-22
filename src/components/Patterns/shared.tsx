@@ -1,12 +1,14 @@
 import * as React from "react";
 
-interface GitUser {
+export interface User {
   id: number;
   login: string;
+  ratingCount: number;
+  phone: string;
 }
 
 export interface SearchResult {
-  items: GitUser[];
+  items: User[];
 }
 
 export interface State {

@@ -19,13 +19,10 @@ export class Fetch extends React.Component<Props, State> {
     }));
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       loading: true,
     });
-  }
-
-  componentDidMount() {
     this.doFetch();
   }
 

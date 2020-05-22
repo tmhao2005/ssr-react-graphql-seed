@@ -12,5 +12,6 @@ declare module NodeJS {
   interface ProcessEnv {
     PORT: number;
     GRAPHQL: string;
+    GAI_API: string;
   }
 }

@@ -2,18 +2,16 @@ import { gql, IResolvers } from "apollo-server";
 import { GitAPI } from "./api/github";
 
 export const typeDefs = gql`
-  type GitUser {
+  type User {
     id: Int
     login: String
-  }
-
-  type GitSearchResult {
-    total: Int
-    items: [GitUser]
+    ratingCount: Int
+    phone: String
   }
 
   type Query {
-    gitUsers(query: String): GitSearchResult
+    users(query: String): [User]
+    user(id: Int): User
   }
 `
 ;
@@ -26,8 +24,13 @@ export interface DataSources {
 
 export const resolvers: IResolvers<any, DataSources> = {
   Query: {
-    gitUsers: async (_source, { query }, { dataSources }) => {
+    users: async (_source, { query }, { dataSources }) => {
       return dataSources.gitAPI.search(query);
+    },
+
+    user: async (_source, { id }, { dataSources }) => {
+      const result =  await dataSources.gitAPI.getOne(id);
+      return result;
     },
   },
 };

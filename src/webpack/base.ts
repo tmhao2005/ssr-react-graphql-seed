@@ -46,9 +46,9 @@ const base = {
                 }],
                 "@babel/typescript",
                 "@babel/react",
-              ]
+              ],
             }
-          }
+          },
         ]
       },
       ...(isDebug
@@ -63,11 +63,11 @@ const base = {
   },
 
   plugins: [
-    new webpack.WatchIgnorePlugin([/css\.d\.ts$/]),
     new webpack.DefinePlugin({
       __DEV__: isDebug,
       PORT: process.env.PORT,
       GRAPHQL: JSON.stringify(process.env.GRAPHQL),
+      GAI_API: JSON.stringify(process.env.GAI_API),
     }),
     isDebug && new webpack.HotModuleReplacementPlugin(),
   ].filter(Boolean),
