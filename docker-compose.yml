@@ -9,3 +9,13 @@ services:
     command: yarn dev
     volumes: 
       - '.:/usr/src/app'
+
+  serve:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    command: node build/server.js
+    volumes: 
+      - '.:/usr/src/app'

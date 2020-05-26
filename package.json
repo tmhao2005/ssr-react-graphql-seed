@@ -1,5 +1,8 @@
 {
   "name": "ssr-react-graphql-seed",
+  "engines": {
+    "node": "12.x"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "build/server.js",
@@ -8,7 +11,8 @@
     "dev": "cross-env NODE_ENV=development RUNNER=dev ts-node './src/index.ts'",
     "lint:fix": "eslint '+(src|tools)/**/*.{ts,tsx}' --fix",
     "clean:build": "rimraf build",
-    "codegen": "graphql-codegen --config './codegen.yml'"
+    "codegen": "graphql-codegen --config './codegen.yml'",
+    "start": "node ./build/server.js"
   },
   "private": false,
   "keywords": [
