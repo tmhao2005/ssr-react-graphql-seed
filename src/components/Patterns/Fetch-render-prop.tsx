@@ -14,13 +14,10 @@ export class Fetch extends React.Component<Props, State> {
     this.state = {} as State;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       loading: true,
     });
-  }
-
-  componentDidMount() {
     this.doFetch();
   }
 

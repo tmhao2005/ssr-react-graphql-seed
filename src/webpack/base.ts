@@ -47,6 +47,9 @@ const base = {
                 "@babel/typescript",
                 "@babel/react",
               ],
+              plugins: [
+                "import-graphql",
+              ]
             }
           },
         ]
@@ -67,7 +70,9 @@ const base = {
       __DEV__: isDebug,
       PORT: process.env.PORT,
       GRAPHQL: JSON.stringify(process.env.GRAPHQL),
-      GAI_API: JSON.stringify(process.env.GAI_API),
+      MY_API: JSON.stringify(process.env.MY_API),
+      FUTA_API: JSON.stringify(process.env.FUTA_API),
+      FUTA_TOKEN: JSON.stringify(process.env.FUTA_TOKEN),
     }),
     isDebug && new webpack.HotModuleReplacementPlugin(),
   ].filter(Boolean),

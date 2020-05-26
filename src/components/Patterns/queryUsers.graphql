@@ -1,0 +1,8 @@
+query QueryUsers($query: String) {
+  users(query: $query) {
+    id,
+    login,
+    ratingCount,
+    phone @client,
+  }
+}

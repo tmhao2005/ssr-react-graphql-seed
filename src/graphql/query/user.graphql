@@ -1,0 +1,11 @@
+type User {
+  id: Int
+  login: String
+  ratingCount: Int
+  phone: String
+}
+
+type Query {
+  users(query: String): [User]
+  user(id: Int): User
+}

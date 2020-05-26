@@ -17,9 +17,15 @@ const cache = new InMemoryCache();
 
 cache.writeData({
   data: {
-    session: {
-      __typename: "session",
-      keyword: "",
+    futa: {
+      __typename: "futa",
+      d1: null,
+      d2: null,
+      date: null,
+      time: null,
+      routeId: null,
+      timeId: null,
+      kind: null,
     },
   },
 });
@@ -58,21 +64,29 @@ export function buildClient(server: boolean) {
       },
 
       Mutation: {
-        setKeyword: (_root, variables, { cache, getCacheKey }) => {
+        setRoute: (_root, variables, { cache, getCacheKey }) => {
           const result = cache.readQuery({
             query: gql`
               {
-                session @client {
-                  keyword
+                futa @client {
+                  d1,
+                  d2,
+                  date,
+                  time,
+                  routeId,
+                  timeId,
+                  kind,
                 }
               }
             `
           });
 
+          console.log("Mutation", variables);
+
           cache.writeData({
             data: {
-              session: {
-                ...result.session,
+              futa: {
+                ...result.futa,
                 ...variables,
               },
             }

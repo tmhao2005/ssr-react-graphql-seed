@@ -7,7 +7,8 @@
     "build": "yarn clean:build && cross-env NODE_ENV=production RUNNER=build ts-node './src/index.ts'",
     "dev": "cross-env NODE_ENV=development RUNNER=dev ts-node './src/index.ts'",
     "lint:fix": "eslint '+(src|tools)/**/*.{ts,tsx}' --fix",
-    "clean:build": "rimraf build"
+    "clean:build": "rimraf build",
+    "codegen": "graphql-codegen --config './codegen.yml'"
   },
   "private": false,
   "keywords": [
@@ -24,12 +25,16 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
+    "@graphql-codegen/cli": "^1.14.0",
+    "@graphql-codegen/typescript": "^1.14.0",
+    "@graphql-codegen/typescript-operations": "^1.14.0",
     "@types/browser-sync": "^2.26.1",
     "@types/node": "^14.0.1",
     "@types/webpack": "^4.41.12",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "babel-loader": "^8.1.0",
+    "babel-plugin-import-graphql": "^2.7.0",
     "browser-sync": "^2.26.7",
     "chalk": "^4.0.0",
     "cross-env": "^7.0.2",
@@ -78,6 +83,7 @@
     "node-fetch": "^2.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-responsive-carousel": "^3.2.7",
     "react-router-dom": "^5.2.0"
   }
 }

@@ -1,21 +1,17 @@
 import { ApolloServer } from "apollo-server-express";
-import { makeExecutableSchema } from "graphql-tools";
 import { GitAPI } from "./api/github";
-import { typeDefs, resolvers } from "./schema";
+import { schema } from "./schema";
+import { FutaAPI } from "./api/futa";
 
 export function buildServer() {
-  const schema = makeExecutableSchema({
-    typeDefs,
-    resolvers,
-  });
-
   const server = new ApolloServer({
     schema,
     dataSources: () => {
       return {
         gitAPI: new GitAPI(),
-      }
-    }
+        futaAPI: new FutaAPI(),
+      };
+    },
   });
 
   return server;
