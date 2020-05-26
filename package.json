@@ -1,5 +1,8 @@
 {
   "name": "ssr-react-graphql-seed",
+  "engines": {
+    "node": "12.x"
+  },
   "version": "1.0.0",
   "description": "a seed project to start with GraphQL + React + SSR feature",
   "main": "build/server.js",
