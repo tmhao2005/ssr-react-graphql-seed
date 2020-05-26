@@ -10,7 +10,7 @@ export type Scalars = {
 
 export type RouteResult = {
   __typename?: "RouteResult";
-  Data?: Maybe<Array<Maybe<Route>>>;
+  Data?: Maybe<Maybe<Route>[]>;
   Status?: Maybe<Scalars["Int"]>;
 };
 
@@ -33,13 +33,13 @@ export type TimeTable = {
 export type TimeTableResult = {
   __typename?: "TimeTableResult";
   Status?: Maybe<Scalars["Int"]>;
-  Data?: Maybe<Array<Maybe<TimeTable>>>;
+  Data?: Maybe<Maybe<TimeTable>[]>;
 };
 
 export type SeatsResult = {
   __typename?: "SeatsResult";
   Status?: Maybe<Scalars["Int"]>;
-  Data?: Maybe<Array<Maybe<Seat>>>;
+  Data?: Maybe<Maybe<Seat>[]>;
 };
 
 export type Seat = {
@@ -80,7 +80,7 @@ export type Query = {
   seats?: Maybe<SeatsResult>;
   timeTable?: Maybe<TimeTableResult>;
   user?: Maybe<User>;
-  users?: Maybe<Array<Maybe<User>>>;
+  users?: Maybe<Maybe<User>[]>;
 };
 
 
@@ -123,8 +123,8 @@ export type QueryUsersQueryVariables = {
 
 export type QueryUsersQuery = (
   { __typename?: "Query" }
-  & { users?: Maybe<Array<Maybe<(
+  & { users?: Maybe<Maybe<(
     { __typename?: "User" }
     & Pick<User, "id" | "login" | "ratingCount" | "phone">
-  )>>>; }
+  )>[]>; }
 );

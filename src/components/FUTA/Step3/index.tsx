@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, List, PageHeader } from "antd";
 import { useTimeTable, useSeats, useMutationFuta } from "../shared";
+import { Checker } from "../Checker";
 
 interface Props {
   slider: any;
@@ -29,7 +30,7 @@ export const Step3: React.FC<Props> = (props) => {
   }, [seats]);
 
   if (error) return <div>:((((</div>
-  if (loading || !timeTable) return <div>Loading...</div>
+  if (!timeTable) return null;
 
   return (
     <>
@@ -37,16 +38,18 @@ export const Step3: React.FC<Props> = (props) => {
         onBack={() => props.slider.current.decrement()}
         title="Select destinations"
       />
-      <List
-        header={<h4>Which time works for you?</h4>}
-        bordered
-        dataSource={timeTable.timeTable.Data}
-        renderItem={({ Id, Kind, Time }) => (
-          <List.Item key={Id}>
-            <Button className={time.timeId === Id ? "active" : void 0} onClick={() => setTime({ timeId: Id, time: Time, kind: Kind })}>{Time}</Button>
-          </List.Item>
-        )}
-      />
+      <Checker spin={loading} tip="searching for available seats...">
+        <List
+          header={<h4>Which time works for you?</h4>}
+          bordered={true}
+          dataSource={timeTable.timeTable.Data}
+          renderItem={({ Id, Kind, Time }) => (
+            <List.Item key={Id}>
+              <Button className={time.timeId === Id ? "active" : void 0} onClick={() => setTime({ timeId: Id, time: Time, kind: Kind })}>{Time}</Button>
+            </List.Item>
+          )}
+        />
+      </Checker>
     </>
   )
 }

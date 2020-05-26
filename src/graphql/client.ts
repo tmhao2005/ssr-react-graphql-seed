@@ -48,7 +48,7 @@ export function buildClient(server: boolean) {
     resolvers: {
       // User is the type returned
       User: {
-        phone: (item, _, { client }) => {
+        phone: () => {
           // const { data } = await client.query({
           //   query: gql`
           //   query Foo($id: Int = ${item.id}) {
@@ -64,8 +64,8 @@ export function buildClient(server: boolean) {
       },
 
       Mutation: {
-        setRoute: (_root, variables, { cache, getCacheKey }) => {
-          const result = cache.readQuery({
+        setRoute: (_root, variables, { cache: mem, getCacheKey }) => {
+          const result = mem.readQuery({
             query: gql`
               {
                 futa @client {
@@ -81,9 +81,10 @@ export function buildClient(server: boolean) {
             `
           });
 
-          console.log("Mutation", variables);
+          if (__DEV__)
+            console.log("Mutation", variables);
 
-          cache.writeData({
+          mem.writeData({
             data: {
               futa: {
                 ...result.futa,

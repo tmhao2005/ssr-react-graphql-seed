@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { useFUTA, useTimeTable, useMutationFuta } from "../shared";
 import { Query, QueryRouteArgs } from "../../../generated/graphql";
+import { Checker } from "../Checker";
 
 const GET_ROUTE = gql`  
   query GetRoute($payload: RouteInput) {
@@ -42,7 +43,7 @@ export const Step2: React.FC<Props> = (props) => {
   });
 
   // Preload to cache them all
-  const { data: timeTable } = useTimeTable();
+  const { data: timeTable, loading: timeTableLoading } = useTimeTable();
 
   const setRoute = useMutationFuta({
     ...info,
@@ -72,16 +73,18 @@ export const Step2: React.FC<Props> = (props) => {
         onBack={() => props.slider.current.decrement()}
         title="Select date"
       />
-      <List
-        header={<h4>Select where you would like to go</h4>}
-        bordered
-        dataSource={proposedDestinations}
-        renderItem={([d1, d2, name], idx) => (
-          <List.Item key={idx}>
-            <Button className={futa.d1 === d1 && futa.d2 === d2 ? "active" : void 0} onClick={() => setInfo({ d1, d2 })}>{name}</Button>
-          </List.Item>
-        )}
-      />
+      <Checker spin={timeTableLoading} tip="searching for available time...">
+        <List
+          header={<h4>Select where you would like to go</h4>}
+          bordered={true}
+          dataSource={proposedDestinations}
+          renderItem={([d1, d2, name], idx) => (
+            <List.Item key={idx}>
+              <Button className={futa.d1 === d1 && futa.d2 === d2 ? "active" : void 0} onClick={() => setInfo({ d1, d2 })}>{name}</Button>
+            </List.Item>
+          )}
+        />
+      </Checker>
     </>
   )
 }

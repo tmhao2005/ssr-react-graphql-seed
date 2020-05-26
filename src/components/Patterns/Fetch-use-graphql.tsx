@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { List, Avatar, Popover, Row, Col, PageHeader } from "antd";
+import { List, PageHeader } from "antd";
 import { UserItem } from "../UserItem";
 import { QueryUsersQuery, QueryUsersQueryVariables } from "../../generated/graphql";
 import * as q from "./queryUsers.graphql";
@@ -13,7 +13,7 @@ export const FetchWithGraphQL: React.FC<Props> = ({ query }) => {
 
   const { loading, error, data } = useQuery<QueryUsersQuery, QueryUsersQueryVariables>(q.QueryUsers, {
     variables: {
-      query: query,
+      query,
     },
     skip: !query,
   });

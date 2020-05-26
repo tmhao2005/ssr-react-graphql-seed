@@ -73,7 +73,7 @@ async function start() {
 
 function webpackTask(name: string, multiCompiler: webpack.MultiCompiler) {
   return new Promise((resolve, reject) => {
-    const compiler = multiCompiler.compilers.find(compiler => compiler.name === name);
+    const compiler = multiCompiler.compilers.find(x => x.name === name);
 
     compiler.hooks.done.tap(name, stats => {
       if (stats.hasErrors()) {

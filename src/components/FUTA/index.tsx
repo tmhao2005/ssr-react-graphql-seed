@@ -22,6 +22,7 @@ export const Futa: React.FC = () => {
       useKeyboardArrows={false}
       dynamicHeight={false}
       emulateTouch={false}
+      swipeable={false}
     >
       <Step1 slider={slider} onDone={onDone()} />
       <Step2 slider={slider} onDone={onDone()} />

@@ -11,9 +11,7 @@ interface Action {
   payload: State;
 }
 
-interface Reducer {
-  (state: State, action: Action): State;
-}
+type Reducer = (state: State, action: Action) => State;
 
 // we can share this custom Hook too
 const useFetch = (props: Props): State => {

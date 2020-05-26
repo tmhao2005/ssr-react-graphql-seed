@@ -21,7 +21,7 @@ export const Step4: React.FC<Props> = (props) => {
       />
       <List
         header={<h4>Select your seat?</h4>}
-        bordered
+        bordered={true}
         dataSource={seats.seats.Data.filter(item => item.BookStatus < 1)}
         renderItem={({ Id, Chair }) => (
           <List.Item key={Id}>

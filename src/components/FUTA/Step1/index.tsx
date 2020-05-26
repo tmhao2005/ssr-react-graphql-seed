@@ -46,7 +46,7 @@ export const Step1: React.FC<Props> = (props) => {
   return (
     <List
       header={<h4>Which date do you want to depart?</h4>}
-      bordered
+      bordered={true}
       dataSource={proposedDates}
       renderItem={(item) => (
         <List.Item key={item.name}>

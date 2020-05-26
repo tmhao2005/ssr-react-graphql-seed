@@ -12,7 +12,8 @@
     "lint:fix": "eslint '+(src|tools)/**/*.{ts,tsx}' --fix",
     "clean:build": "rimraf build",
     "codegen": "graphql-codegen --config './codegen.yml'",
-    "start": "node ./build/server.js"
+    "start": "node ./build/server.js",
+    "tslint": "tslint './src/**/*.{ts,tsx}' --fix"
   },
   "private": false,
   "keywords": [
@@ -50,7 +51,12 @@
     "eslint-plugin-react": "^7.20.0",
     "file-loader": "^6.0.0",
     "ora": "^4.0.4",
+    "prettier": "^2.0.5",
     "ts-node": "^8.10.1",
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.3.0",
+    "tslint-react": "^5.0.0",
     "typescript": "^3.9.2",
     "webpack": "^4.43.0",
     "webpack-assets-manifest": "^3.1.1",
@@ -61,6 +67,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.1.0",
     "@apollo/react-hooks": "^3.1.5",
     "@apollo/react-ssr": "^3.1.5",
     "@emotion/core": "^10.0.28",
