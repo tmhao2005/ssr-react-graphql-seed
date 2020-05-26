@@ -68,7 +68,7 @@ const base = {
   plugins: [
     new webpack.DefinePlugin({
       __DEV__: isDebug,
-      GRAPHQL: JSON.stringify(`http://localhost:${process.env.PORT}/graphql`),
+      GRAPHQL: JSON.stringify(process.env.GRAPHQL),
       MY_API: JSON.stringify(process.env.MY_API),
       FUTA_API: JSON.stringify(process.env.FUTA_API),
       FUTA_TOKEN: JSON.stringify(process.env.FUTA_TOKEN),

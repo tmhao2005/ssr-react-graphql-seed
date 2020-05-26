@@ -12,6 +12,8 @@ export function buildServer() {
         futaAPI: new FutaAPI(),
       };
     },
+    playground: true,
+    introspection: true,
   });
 
   return server;
