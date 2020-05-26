@@ -9,73 +9,73 @@ export type Scalars = {
 };
 
 export type RouteResult = {
-  __typename?: 'RouteResult';
+  __typename?: "RouteResult";
   Data?: Maybe<Array<Maybe<Route>>>;
-  Status?: Maybe<Scalars['Int']>;
+  Status?: Maybe<Scalars["Int"]>;
 };
 
 export type Route = {
-  __typename?: 'Route';
-  Id?: Maybe<Scalars['Int']>;
-  Price?: Maybe<Scalars['String']>;
+  __typename?: "Route";
+  Id?: Maybe<Scalars["Int"]>;
+  Price?: Maybe<Scalars["String"]>;
 };
 
 export type TimeTable = {
-  __typename?: 'TimeTable';
-  IDKind?: Maybe<Scalars['Int']>;
-  IDTimeStart?: Maybe<Scalars['Int']>;
-  IDWay?: Maybe<Scalars['Int']>;
-  Id?: Maybe<Scalars['Int']>;
-  Kind?: Maybe<Scalars['String']>;
-  Time?: Maybe<Scalars['String']>;
+  __typename?: "TimeTable";
+  IDKind?: Maybe<Scalars["Int"]>;
+  IDTimeStart?: Maybe<Scalars["Int"]>;
+  IDWay?: Maybe<Scalars["Int"]>;
+  Id?: Maybe<Scalars["Int"]>;
+  Kind?: Maybe<Scalars["String"]>;
+  Time?: Maybe<Scalars["String"]>;
 };
 
 export type TimeTableResult = {
-  __typename?: 'TimeTableResult';
-  Status?: Maybe<Scalars['Int']>;
+  __typename?: "TimeTableResult";
+  Status?: Maybe<Scalars["Int"]>;
   Data?: Maybe<Array<Maybe<TimeTable>>>;
 };
 
 export type SeatsResult = {
-  __typename?: 'SeatsResult';
-  Status?: Maybe<Scalars['Int']>;
+  __typename?: "SeatsResult";
+  Status?: Maybe<Scalars["Int"]>;
   Data?: Maybe<Array<Maybe<Seat>>>;
 };
 
 export type Seat = {
-  __typename?: 'Seat';
-  BookStatus?: Maybe<Scalars['Int']>;
-  Chair?: Maybe<Scalars['String']>;
-  ColumnNo?: Maybe<Scalars['Int']>;
-  Discount?: Maybe<Scalars['Int']>;
-  FloorNo?: Maybe<Scalars['Int']>;
-  Id?: Maybe<Scalars['Int']>;
-  InSelect?: Maybe<Scalars['Int']>;
-  LockChair?: Maybe<Scalars['Int']>;
-  RowNo?: Maybe<Scalars['Int']>;
+  __typename?: "Seat";
+  BookStatus?: Maybe<Scalars["Int"]>;
+  Chair?: Maybe<Scalars["String"]>;
+  ColumnNo?: Maybe<Scalars["Int"]>;
+  Discount?: Maybe<Scalars["Int"]>;
+  FloorNo?: Maybe<Scalars["Int"]>;
+  Id?: Maybe<Scalars["Int"]>;
+  InSelect?: Maybe<Scalars["Int"]>;
+  LockChair?: Maybe<Scalars["Int"]>;
+  RowNo?: Maybe<Scalars["Int"]>;
 };
 
 export type RouteInput = {
-  d1: Scalars['String'];
-  d2: Scalars['String'];
-  date: Scalars['String'];
+  d1: Scalars["String"];
+  d2: Scalars["String"];
+  date: Scalars["String"];
 };
 
 export type TimeTableInput = {
-  routeId: Scalars['Int'];
-  departureDate: Scalars['String'];
+  routeId: Scalars["Int"];
+  departureDate: Scalars["String"];
 };
 
 export type SeatsInput = {
-  routeId: Scalars['Int'];
-  timeId: Scalars['Int'];
-  departureDate: Scalars['String'];
-  departureTime: Scalars['String'];
-  kind: Scalars['String'];
+  routeId: Scalars["Int"];
+  timeId: Scalars["Int"];
+  departureDate: Scalars["String"];
+  departureTime: Scalars["String"];
+  kind: Scalars["String"];
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   route?: Maybe<RouteResult>;
   seats?: Maybe<SeatsResult>;
   timeTable?: Maybe<TimeTableResult>;
@@ -100,31 +100,31 @@ export type QueryTimeTableArgs = {
 
 
 export type QueryUserArgs = {
-  id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars["Int"]>;
 };
 
 
 export type QueryUsersArgs = {
-  query?: Maybe<Scalars['String']>;
+  query?: Maybe<Scalars["String"]>;
 };
 
 export type User = {
-  __typename?: 'User';
-  id?: Maybe<Scalars['Int']>;
-  login?: Maybe<Scalars['String']>;
-  ratingCount?: Maybe<Scalars['Int']>;
-  phone?: Maybe<Scalars['String']>;
+  __typename?: "User";
+  id?: Maybe<Scalars["Int"]>;
+  login?: Maybe<Scalars["String"]>;
+  ratingCount?: Maybe<Scalars["Int"]>;
+  phone?: Maybe<Scalars["String"]>;
 };
 
 export type QueryUsersQueryVariables = {
-  query?: Maybe<Scalars['String']>;
+  query?: Maybe<Scalars["String"]>;
 };
 
 
 export type QueryUsersQuery = (
-  { __typename?: 'Query' }
+  { __typename?: "Query" }
   & { users?: Maybe<Array<Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'login' | 'ratingCount' | 'phone'>
-  )>>> }
+    { __typename?: "User" }
+    & Pick<User, "id" | "login" | "ratingCount" | "phone">
+  )>>>; }
 );

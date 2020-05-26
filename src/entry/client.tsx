@@ -9,7 +9,7 @@ const client = buildClient(false);
 
 render();
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   module.hot.accept("../components/App", () => {
     render();
   });

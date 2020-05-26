@@ -97,8 +97,10 @@ server.applyMiddleware({
 // module.hot is exported from webpack
 const hot = !!module.hot;
 
+console.log("Check env variables:", process.env.PORT, process.env.FUTA_API);
+
 if (!hot) {
-  app.listen(PORT, () => console.log("The server is running on port %s", PORT));
+  app.listen(process.env.PORT, () => console.log("The server is running on port %s", process.env.PORT));
 }
 
 // For webpack-hot-server
