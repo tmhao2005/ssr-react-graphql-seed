@@ -1,8 +1,5 @@
 {
   "name": "ssr-react-graphql-seed",
-  "engines": {
-    "node": "12.x"
-  },
   "version": "1.0.0",
   "description": "",
   "main": "build/server.js",
