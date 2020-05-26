@@ -9,9 +9,11 @@ const client = buildClient(false);
 
 render();
 
-module.hot.accept("../components/App", () => {
-  render();
-});
+if (process.env.NODE_ENV !== 'production') {
+  module.hot.accept("../components/App", () => {
+    render();
+  });
+}
 
 function render() {
   const root = document.getElementById("root");

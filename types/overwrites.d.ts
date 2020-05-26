@@ -10,6 +10,7 @@ declare interface NodeModule {
 
 declare module NodeJS {
   interface ProcessEnv {
+    NODE_ENV: 'development' | 'production' | 'test';
     PORT: number;
     GRAPHQL: string;
     MY_API: string;
