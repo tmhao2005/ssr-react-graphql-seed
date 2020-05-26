@@ -3,7 +3,7 @@ import { RESTDataSource } from "apollo-datasource-rest";
 export class GitAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = GAI_API;
+    this.baseURL = MY_API;
   }
 
   async search(query: string) {

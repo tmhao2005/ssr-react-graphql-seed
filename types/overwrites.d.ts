@@ -12,6 +12,8 @@ declare module NodeJS {
   interface ProcessEnv {
     PORT: number;
     GRAPHQL: string;
-    GAI_API: string;
+    MY_API: string;
+    FUTA_API: string;
+    FUTA_TOKEN: string;
   }
 }

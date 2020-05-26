@@ -1,32 +1,17 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
 import { List, Avatar, Popover, Row, Col, PageHeader } from "antd";
-import { User } from "./shared";
+import { UserItem } from "../UserItem";
+import { QueryUsersQuery, QueryUsersQueryVariables } from "../../generated/graphql";
+import * as q from "./queryUsers.graphql";
 
 interface Props {
   query: string;
 }
 
 export const FetchWithGraphQL: React.FC<Props> = ({ query }) => {
-  // const { data: keyword } = useQuery(gql`
-  //   {
-  //     session @client {
-  //       keyword,
-  //     }
-  //   }
-  // `);
 
-  const { loading, error, data } = useQuery<Record<"users", User[]>>(gql`
-    query users($query: String) {
-      users(query: $query) {
-        id,
-        login,
-        ratingCount,
-        phone @client,
-      }
-    }
-  `, {
+  const { loading, error, data } = useQuery<QueryUsersQuery, QueryUsersQueryVariables>(q.QueryUsers, {
     variables: {
       query: query,
     },
@@ -46,14 +31,7 @@ export const FetchWithGraphQL: React.FC<Props> = ({ query }) => {
         <List
           itemLayout="horizontal"
           dataSource={data.users}
-          renderItem={item => (
-            <List.Item key={item.id} onClick={() => console.log("touch me")}>
-              <List.Item.Meta
-                title={item.id}
-                description={item.ratingCount}
-              />
-            </List.Item>
-          )}
+          renderItem={item => <UserItem user={item} />}
         />
       }
     </>

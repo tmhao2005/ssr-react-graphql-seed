@@ -1,0 +1,65 @@
+type RouteResult {
+  Data: [Route]
+  Status: Int
+}
+
+type Route {
+  Id: Int
+  Price: String
+}
+
+type TimeTable {
+  IDKind: Int
+  IDTimeStart: Int
+  IDWay: Int
+  Id: Int
+  Kind: String
+  Time: String
+}
+
+type TimeTableResult {
+  Status: Int
+  Data: [TimeTable]
+}
+
+type SeatsResult {
+  Status: Int
+  Data: [Seat]
+}
+
+type Seat {
+  BookStatus: Int
+  Chair: String
+  ColumnNo: Int
+  Discount: Int
+  FloorNo: Int
+  Id: Int
+  InSelect: Int
+  LockChair: Int
+  RowNo: Int
+}
+
+input RouteInput {
+  d1: String!
+  d2: String!
+  date: String!  
+}
+
+input TimeTableInput {
+  routeId: Int!
+  departureDate: String!
+}
+
+input SeatsInput {
+  routeId: Int!
+  timeId: Int!
+  departureDate: String!
+  departureTime: String!
+  kind: String! 
+}
+
+type Query {
+  route(payload: RouteInput): RouteResult
+  timeTable(payload: TimeTableInput): TimeTableResult
+  seats(payload: SeatsInput): SeatsResult
+}

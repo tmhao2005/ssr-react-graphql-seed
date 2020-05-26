@@ -19,7 +19,7 @@ export interface State {
 export const renderer = ({ loading, data }: State): React.ReactElement => (
   <>
     {loading && "Loading"}
-    {!loading && (
+    {!loading && data && (
       <ul>
         {data.items.map(item => <li key={item.id}>{item.login}</li>)}
       </ul>
