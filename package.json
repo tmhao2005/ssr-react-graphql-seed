@@ -1,7 +1,7 @@
 {
   "name": "ssr-react-graphql-seed",
   "version": "1.0.0",
-  "description": "",
+  "description": "a seed project to start with GraphQL + React + SSR feature",
   "main": "build/server.js",
   "scripts": {
     "build": "yarn clean:build && cross-env NODE_ENV=production RUNNER=build ts-node './src/index.ts'",
