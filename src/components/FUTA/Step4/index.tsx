@@ -32,3 +32,17 @@ export const Step4: React.FC<Props> = (props) => {
     </>
   )
 }
+
+// function splitAB(arr: Seat[]) {
+//   return arr.filter(item => item.BookStatus < 1).reduce((acc, seat) => {
+//     if (/^A/.test(seat.Chair)) {
+//       acc[0].push(seat);
+//     }
+
+//     if (/^B/.test(seat.Chair)) {
+//       acc[1].push(seat);
+//     }
+
+//     return acc;
+//   }, [[], []]);
+// }

@@ -9,7 +9,7 @@ interface Props {
   tip: string;
 }
 
-export const Checker: React.FC<Props> = ({ spin, tip, children }) => {
+export const Spinner: React.FC<Props> = ({ spin, tip, children }) => {
   return (
     <>
       {spin ? <div style={{ padding: 24 }}><Spin indicator={antIcon} tip={tip} /></div> : children}

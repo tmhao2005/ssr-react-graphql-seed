@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { useFUTA, useTimeTable, useMutationFuta } from "../shared";
 import { Query, QueryRouteArgs } from "../../../generated/graphql";
-import { Checker } from "../Checker";
+import { Spinner } from "../Spinner";
 
 const GET_ROUTE = gql`  
   query GetRoute($payload: RouteInput) {
@@ -21,6 +21,8 @@ const proposedDestinations = [
   ["RACHGIA", "TPHCM", "Rạch Giá - HCM"],
   ["TPHCM", "CANTHO", "HCM - Cần Thơ"],
   ["CANTHO", "TPHCM", "Cần Thơ - HCM"],
+  ["TPHCM", "NHATRANG", "HCM - Nha Trang"],
+  ["NHATRANG", "TPHCM", "Nha Trang - HCM"],
 ];
 
 interface Props {
@@ -73,7 +75,7 @@ export const Step2: React.FC<Props> = (props) => {
         onBack={() => props.slider.current.decrement()}
         title="Select date"
       />
-      <Checker spin={timeTableLoading} tip="searching for available time...">
+      <Spinner spin={timeTableLoading} tip="searching for available time...">
         <List
           header={<h4>Select where you would like to go</h4>}
           bordered={true}
@@ -84,7 +86,7 @@ export const Step2: React.FC<Props> = (props) => {
             </List.Item>
           )}
         />
-      </Checker>
+      </Spinner>
     </>
   )
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, List, PageHeader } from "antd";
 import { useTimeTable, useSeats, useMutationFuta } from "../shared";
-import { Checker } from "../Checker";
+import { Spinner } from "../Spinner";
 
 interface Props {
   slider: any;
@@ -10,8 +10,8 @@ interface Props {
 
 export const Step3: React.FC<Props> = (props) => {
   const [time, setTime] = React.useState<any>({});
-  const { data: timeTable, loading, error } = useTimeTable();
-  const { data: seats } = useSeats();
+  const { data: timeTable } = useTimeTable();
+  const { data: seats, loading, error } = useSeats();
 
   const setRoute = useMutationFuta({
     ...time,
@@ -38,7 +38,7 @@ export const Step3: React.FC<Props> = (props) => {
         onBack={() => props.slider.current.decrement()}
         title="Select destinations"
       />
-      <Checker spin={loading} tip="searching for available seats...">
+      <Spinner spin={loading} tip="searching for available seats...">
         <List
           header={<h4>Which time works for you?</h4>}
           bordered={true}
@@ -49,7 +49,7 @@ export const Step3: React.FC<Props> = (props) => {
             </List.Item>
           )}
         />
-      </Checker>
+      </Spinner>
     </>
   )
 }
