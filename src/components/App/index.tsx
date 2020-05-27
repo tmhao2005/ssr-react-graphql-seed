@@ -17,6 +17,7 @@ injectGlobal`
   ${require("react-responsive-carousel/lib/styles/carousel.min.css").toString()}
 
   .carousel .slide {
+    text-align: unset;
     background: transparent;
   }
 `;

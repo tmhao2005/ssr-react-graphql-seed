@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, List, PageHeader } from "antd";
+import { Button, List, PageHeader, Tag, Divider } from "antd";
 import { useTimeTable, useSeats, useMutationFuta } from "../shared";
 import { Spinner } from "../Spinner";
 
@@ -39,16 +39,20 @@ export const Step3: React.FC<Props> = (props) => {
         title="Select destinations"
       />
       <Spinner spin={loading} tip="searching for available seats...">
-        <List
-          header={<h4>Which time works for you?</h4>}
-          bordered={true}
-          dataSource={timeTable.timeTable.Data}
-          renderItem={({ Id, Kind, Time }) => (
-            <List.Item key={Id}>
-              <Button className={time.timeId === Id ? "active" : void 0} onClick={() => setTime({ timeId: Id, time: Time, kind: Kind })}>{Time}</Button>
-            </List.Item>
-          )}
-        />
+        <>
+          <h4>Select the suitable time:</h4>
+          <Divider />
+          {timeTable.timeTable.Data.map(({ Id, Time, Kind }) => (
+            <Tag
+              key={Id}
+              style={{ marginBottom: 8 }}
+              color={time.timeId === Id ? "blue" : void 0} 
+              onClick={() => setTime({ timeId: Id, time: Time, kind: Kind })}
+            >
+              {Time}
+            </Tag>
+          ))}
+        </>
       </Spinner>
     </>
   )

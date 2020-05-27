@@ -13,7 +13,7 @@
     "clean:build": "rimraf build",
     "codegen": "graphql-codegen --config './codegen.yml'",
     "start": "node ./build/server.js",
-    "tslint": "tslint './src/**/*.{ts,tsx}' --fix"
+    "tslint": "tslint -c tslint.json './src/**/*.{ts,tsx}' --fix"
   },
   "private": false,
   "keywords": [

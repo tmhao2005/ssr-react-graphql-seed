@@ -12,7 +12,7 @@ interface Props {
 export const Spinner: React.FC<Props> = ({ spin, tip, children }) => {
   return (
     <>
-      {spin ? <div style={{ padding: 24 }}><Spin indicator={antIcon} tip={tip} /></div> : children}
+      {spin ? <div style={{ padding: 24, textAlign: 'center' }}><Spin indicator={antIcon} tip={tip} /></div> : children}
     </>
   )
 }
