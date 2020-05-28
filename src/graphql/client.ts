@@ -26,6 +26,8 @@ cache.writeData({
       routeId: null,
       timeId: null,
       kind: null,
+      lovedTimes: [],
+      lovedChairs: [],
     },
   },
 });
@@ -76,6 +78,8 @@ export function buildClient(server: boolean) {
                   routeId,
                   timeId,
                   kind,
+                  lovedTimes,
+                  lovedChairs,
                 }
               }
             `
@@ -88,7 +92,7 @@ export function buildClient(server: boolean) {
             data: {
               futa: {
                 ...result.futa,
-                ...variables,
+                ...variables.payload,
               },
             }
           });

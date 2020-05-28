@@ -21,7 +21,7 @@ export const Step4: React.FC<Props> = (props) => {
       />
 
       <h4>Here is all the available seats for you to select:</h4>
-      
+
       <Divider />
 
       {seats.seats.Data.map(({ Id, Chair }) => (

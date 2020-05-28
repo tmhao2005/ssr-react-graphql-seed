@@ -12,6 +12,8 @@ const FUTA_INFO = gql`
       routeId,
       timeId,
       kind,
+      lovedTimes,
+      lovedChairs,
     }
   }
 `;
@@ -28,7 +30,7 @@ const GET_TIMETABLE = gql`
   }
 `;
 
-const GET_SEATS = gql`  
+export const GET_SEATS = gql`  
   query GetSeats($payload: SeatsInput) {
     seats(payload: $payload) {
       Data {
@@ -41,8 +43,8 @@ const GET_SEATS = gql`
 `;
 
 const SET_ROUTE = gql`
-  mutation SetRoute($d1: String, $d2: String, $date: String, $time: String, $routeId: Int, $timeId: Int, $kind: String) {
-    setRoute(d1: $d1, d2: $d2, date: $date, time: $time, routeId: $routeId, timeId: $timeId, kind: $kind) @client
+  mutation SetRoute($payload: FutaInput) {
+    setRoute(payload: $payload) @client
   }
 `;
 
@@ -92,8 +94,10 @@ export function useMutationFuta(values: any) {
   const { futa } = useFUTA();
   const [setRoute] = useMutation(SET_ROUTE, {
     variables: {
-      ...futa,
-      ...values,
+      payload: {
+        ...futa,
+        ...values,
+      },
     },
   });
 

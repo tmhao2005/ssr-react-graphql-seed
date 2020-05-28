@@ -26,14 +26,14 @@ export const Step1: React.FC<Props> = (props) => {
 
   return (
     <List
-      header={<h4>Which date do you want to depart?</h4>}
+      header={<h4>Bạn muốn đi vào ngày nào?</h4>}
       bordered={true}
       dataSource={buildProposedDate(10)}
       renderItem={(item) => (
         <List.Item key={item.name}>
-          <Button 
-            style={{ display: 'flex', alignItems: 'center' }} 
-            className={futa.date === item.date ? "active" : void 0} 
+          <Button
+            style={{ display: "flex", alignItems: "center" }}
+            className={futa.date === item.date ? "active" : void 0}
             onClick={() => setInfo({ date: item.date })}
           >
             <span style={{ marginRight: 8 }}>{item.name}</span>
@@ -66,22 +66,22 @@ function getWeekDay(date: Date) {
 
 function buildSuffix(idx: number, fallback: string) {
   switch (idx) {
-    case 0: 
+    case 0:
       return {
-        label: 'Hôm nay',
-        color: 'green',
+        label: "Hôm nay",
+        color: "green",
       };
 
-    case 1: 
+    case 1:
       return {
-        label: 'Ngày mai',
-        color: 'blue',
+        label: "Ngày mai",
+        color: "blue",
       };
 
-    default: 
+    default:
       return {
         label: fallback,
-        color: '',
+        color: "",
       };
   }
 }

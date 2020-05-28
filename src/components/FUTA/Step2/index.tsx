@@ -32,6 +32,7 @@ interface Props {
 
 export const Step2: React.FC<Props> = (props) => {
   const [info, setInfo] = React.useState<any>({});
+  const [move, setMove] = React.useState<boolean>(false);
   const { futa } = useFUTA();
 
   const { data: route } = useQuery<Query, QueryRouteArgs>(GET_ROUTE, {
@@ -44,13 +45,14 @@ export const Step2: React.FC<Props> = (props) => {
     skip: !info.d1 || !info.d2,
   });
 
-  // Preload to cache them all
+  // Preload to cache them all if routeId has set
   const { data: timeTable, loading: timeTableLoading } = useTimeTable();
 
   const setRoute = useMutationFuta({
     ...info,
     routeId: route ? route.route.Data[0].Id : null,
-    // Remove value set before what makes wrongly
+    // Remove value set before what makes wrongly at step 3
+    // Clear data at step 3 in a nutshell
     timeId: null,
   });
 
@@ -59,30 +61,41 @@ export const Step2: React.FC<Props> = (props) => {
     if (info.d1 && info.d2 && route) {
       setRoute();
     }
-  }, [info, route]); // OR
+  }, [info, route]);
 
   // The carousel renders twice making an error for now???
   // so I switched to `react-responsive-carousel` to fix the issue
   useEffect(() => {
-    if (timeTable) {
+    if (timeTable && move) {
       props.slider.current.increment();
+      setMove(false);
     }
-  }, [timeTable]);
+  }, [timeTable, move]);
 
   return (
     <>
       <PageHeader
-        onBack={() => props.slider.current.decrement()}
-        title="Select date"
+        onBack={() => {
+          props.slider.current.decrement();
+        }}
+        title="Chọn lại ngày đi"
       />
       <Spinner spin={timeTableLoading} tip="searching for available time...">
         <List
-          header={<h4>Select where you would like to go</h4>}
+          header={<h4>Bạn muốn đi đâu?</h4>}
           bordered={true}
           dataSource={proposedDestinations}
           renderItem={([d1, d2, name], idx) => (
             <List.Item key={idx}>
-              <Button className={futa.d1 === d1 && futa.d2 === d2 ? "active" : void 0} onClick={() => setInfo({ d1, d2 })}>{name}</Button>
+              <Button
+                className={futa.d1 === d1 && futa.d2 === d2 ? "active" : void 0}
+                onClick={() => {
+                  setInfo({ d1, d2 });
+                  setMove(true);
+                }}
+              >
+                {name}
+              </Button>
             </List.Item>
           )}
         />
