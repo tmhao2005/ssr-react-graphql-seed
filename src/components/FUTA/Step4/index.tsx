@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, List, PageHeader, Divider, Tag } from "antd";
+import { PageHeader, Divider, Tag } from "antd";
 import { useSeats } from "../shared";
 
 interface Props {
@@ -20,10 +20,8 @@ export const Step4: React.FC<Props> = (props) => {
         title="Select time"
       />
 
-      <h4>Here is all the available seats for you to select:</h4>
-
+      <h4>Đây là toàn bộ ghế trống:</h4>
       <Divider />
-
       {seats.seats.Data.map(({ Id, Chair }) => (
         <Tag key={Id} style={{ marginBottom: 8 }}>
           {Chair}

@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { Query, QueryTimeTableArgs, QuerySeatsArgs } from "../../generated/graphql";
+import { AppState, FutaState } from "../../graphql/client";
 
 const FUTA_INFO = gql`
   {
@@ -14,6 +15,7 @@ const FUTA_INFO = gql`
       kind,
       lovedTimes,
       lovedChairs,
+      bookTelephone,
     }
   }
 `;
@@ -50,10 +52,10 @@ const SET_ROUTE = gql`
 
 const initial = {
   futa: {}
-}
+} as AppState;
 
 export const useFUTA = () => {
-  const { data } = useQuery(FUTA_INFO);
+  const { data } = useQuery<AppState>(FUTA_INFO);
   return !data ? initial : data;
 }
 
@@ -90,7 +92,7 @@ export function useSeats() {
   return result;
 }
 
-export function useMutationFuta(values: any) {
+export function useMutationFuta(values: Partial<FutaState>) {
   const { futa } = useFUTA();
   const [setRoute] = useMutation(SET_ROUTE, {
     variables: {

@@ -5,9 +5,10 @@ import { PlusOutlined } from "@ant-design/icons";
 interface Props {
   defaultTags: string[];
   onChange: (tags: string[]) => void;
+  color?: string;
 }
 
-export const TagInput: React.FC<Props> = ({ defaultTags, onChange }) => {
+export const TagInput: React.FC<Props> = ({ defaultTags, color, onChange }) => {
   const [tags, setTags] = React.useState(defaultTags);
   const [inputValue, setInputValue] = React.useState<string>();
   const [inputVisible, setInputVisible] = React.useState<boolean>(false);
@@ -41,10 +42,11 @@ export const TagInput: React.FC<Props> = ({ defaultTags, onChange }) => {
 
   return (
     <>
-      {tags.map((tag, index) => {
+      {tags.map((tag) => {
         const tagElem = (
           <Tag
-            className="edit-tag"
+            color={color}
+            style={{ marginBottom: 8 }}
             key={tag}
             closable={true}
             onClose={() => handleClose(tag)}

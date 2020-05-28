@@ -15,7 +15,27 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const cache = new InMemoryCache();
 
-cache.writeData({
+interface Base {
+  __typename: string;
+}
+export interface FutaState extends Base {
+  d1: string | null;
+  d2: string | null;
+  date: string | null;
+  time: string | null;
+  routeId: number | null;
+  timeId: number | null;
+  kind: string | null;
+  bookTelephone: string | null;
+  lovedTimes: string[];
+  lovedChairs: string[];
+}
+
+export interface AppState {
+  futa: FutaState;
+}
+
+cache.writeData<AppState>({
   data: {
     futa: {
       __typename: "futa",
@@ -26,6 +46,7 @@ cache.writeData({
       routeId: null,
       timeId: null,
       kind: null,
+      bookTelephone: null,
       lovedTimes: [],
       lovedChairs: [],
     },
@@ -50,17 +71,8 @@ export function buildClient(server: boolean) {
     resolvers: {
       // User is the type returned
       User: {
+        // This field is only existed on client side
         phone: () => {
-          // const { data } = await client.query({
-          //   query: gql`
-          //   query Foo($id: Int = ${item.id}) {
-          //     user(id: $id) {
-          //       id,
-          //       phone,
-          //     }
-          //   }
-          // `});
-          // return data.user.phone;
           return "phone";
         }
       },
@@ -80,13 +92,15 @@ export function buildClient(server: boolean) {
                   kind,
                   lovedTimes,
                   lovedChairs,
+                  bookTelephone,
                 }
               }
             `
           });
 
-          if (__DEV__)
+          if (__DEV__) {
             console.log("Mutation", variables);
+          }
 
           mem.writeData({
             data: {

@@ -99,6 +99,7 @@ export const Step3: React.FC<Props> = (props) => {
             kind: item.Kind,
           },
         },
+        fetchPolicy: "network-only",
       });
 
       if (data) {
@@ -140,6 +141,7 @@ export const Step3: React.FC<Props> = (props) => {
           dispatch({
             payload: {
               suggestions: [],
+              running: false,
             }
           });
         }}
@@ -147,10 +149,15 @@ export const Step3: React.FC<Props> = (props) => {
       />
 
       <h4>Thêm vào thời gian mà bạn muốn đi và số ghế mà bạn yêu thích</h4>
+      {futa.bookTelephone && (
+        <Button type="link" onClick={() => window.open(`tel:${futa.bookTelephone}`)}>
+          Nhấn vào đây để gọi đặt vé hen :|
+        </Button>
+      )}
       <Divider />
 
       <div style={{ marginBottom: 16 }}>
-        <TagInput defaultTags={state.lovedTimes} onChange={(tags) => {
+        <TagInput color={"#f50"} defaultTags={state.lovedTimes} onChange={(tags) => {
           dispatch({
             payload: {
               lovedTimes: tags,
@@ -160,7 +167,7 @@ export const Step3: React.FC<Props> = (props) => {
         }} />
       </div>
       <div>
-        <TagInput defaultTags={state.lovedChairs} onChange={(tags) => {
+        <TagInput color={"#2db7f5"} defaultTags={state.lovedChairs} onChange={(tags) => {
           dispatch({
             payload: {
               lovedChairs: tags,
@@ -187,7 +194,9 @@ export const Step3: React.FC<Props> = (props) => {
           ))}
 
           <Divider />
-          <Button type="primary" size="small" loading={state.running} onClick={onSuggest}>đang lục ghế...</Button>
+          <Button style={{ marginRight: 8, marginBottom: 8 }} type="primary" loading={state.running} onClick={onSuggest}>
+            {state.running ? "Đang tìm nhé..." : "Tìm ghế..."}
+          </Button>
         </>
       </Spinner>
     </>

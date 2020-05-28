@@ -5,6 +5,7 @@ import { gql } from "apollo-boost";
 import { useFUTA, useTimeTable, useMutationFuta } from "../shared";
 import { Query, QueryRouteArgs } from "../../../generated/graphql";
 import { Spinner } from "../Spinner";
+import { FutaState } from "../../../graphql/client";
 
 const GET_ROUTE = gql`  
   query GetRoute($payload: RouteInput) {
@@ -17,8 +18,8 @@ const GET_ROUTE = gql`
 `;
 
 const proposedDestinations = [
-  ["TPHCM", "RACHGIA", "HCM - Rạch Giá"],
-  ["RACHGIA", "TPHCM", "Rạch Giá - HCM"],
+  ["TPHCM", "RACHGIA", "HCM - Rạch Giá", "19006067"],
+  ["RACHGIA", "TPHCM", "Rạch Giá - HCM", "02973691691"],
   ["TPHCM", "CANTHO", "HCM - Cần Thơ"],
   ["CANTHO", "TPHCM", "Cần Thơ - HCM"],
   ["TPHCM", "NHATRANG", "HCM - Nha Trang"],
@@ -31,7 +32,7 @@ interface Props {
 }
 
 export const Step2: React.FC<Props> = (props) => {
-  const [info, setInfo] = React.useState<any>({});
+  const [info, setInfo] = React.useState<Partial<FutaState>>({});
   const [move, setMove] = React.useState<boolean>(false);
   const { futa } = useFUTA();
 
@@ -39,7 +40,8 @@ export const Step2: React.FC<Props> = (props) => {
     variables: {
       payload: {
         date: futa.date,
-        ...info,
+        d1: info.d1!,
+        d2: info.d2!,
       },
     },
     skip: !info.d1 || !info.d2,
@@ -80,17 +82,17 @@ export const Step2: React.FC<Props> = (props) => {
         }}
         title="Chọn lại ngày đi"
       />
-      <Spinner spin={timeTableLoading} tip="searching for available time...">
+      <Spinner spin={timeTableLoading} tip="đang tìm chuyến đi ...">
         <List
           header={<h4>Bạn muốn đi đâu?</h4>}
           bordered={true}
           dataSource={proposedDestinations}
-          renderItem={([d1, d2, name], idx) => (
+          renderItem={([d1, d2, name, bookTelephone =  null], idx) => (
             <List.Item key={idx}>
               <Button
                 className={futa.d1 === d1 && futa.d2 === d2 ? "active" : void 0}
                 onClick={() => {
-                  setInfo({ d1, d2 });
+                  setInfo({ d1, d2, bookTelephone });
                   setMove(true);
                 }}
               >
