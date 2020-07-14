@@ -58,15 +58,15 @@ export const App: React.FC = () => {
                   <Fetch url={url} />
 
                   <hr />
-                  <h2>with &quot;render prop" pattern</h2>
+                  <h2>with `render prop` pattern</h2>
                   <FetchRenderProp url={url} />
 
                   <hr />
-                  <h2>with "HOC" pattern</h2>
+                  <h2>with `HOC` pattern</h2>
                   <FetchWithHOC url={url} />
 
                   <hr />
-                  <h2>with "Hook" pattern</h2>
+                  <h2>with `Hook` pattern</h2>
                   <FetchWithHook url={url} />
                   </>
                 )}
@@ -79,5 +79,5 @@ export const App: React.FC = () => {
 
       <Footer style={{ textAlign: "center" }}>tmhao2005@gmail.com</Footer>
     </Layout>
-  )
-}
+  );
+};

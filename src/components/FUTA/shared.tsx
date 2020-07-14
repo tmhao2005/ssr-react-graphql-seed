@@ -1,67 +1,67 @@
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { Query, QueryTimeTableArgs, QuerySeatsArgs } from "../../generated/graphql";
-import { AppState, FutaState } from "../../graphql/client";
+import gql from "graphql-tag";
+import { Query, QueryTimeTableArgs, QuerySeatsArgs, Futa, MutationSetRouteArgs } from "../../generated/graphql";
+import { AppCache } from "../../graphql/client";
 
-const FUTA_INFO = gql`
+const FUTA_CLIENT_QUERY = gql`
   {
     futa @client {
-      d1,
-      d2,
-      date,
-      time,
-      routeId,
-      timeId,
-      kind,
-      lovedTimes,
-      lovedChairs,
-      bookTelephone,
+      d1
+      d2
+      date
+      time
+      routeId
+      timeId
+      kind
+      lovedTimes
+      lovedChairs
+      bookTelephone
     }
   }
 `;
 
-const GET_TIMETABLE = gql`  
+const TIME_TABLE_QUERY = gql`  
   query GetTimeTable($payload: TimeTableInput) {
     timeTable(payload: $payload) {
       Data {
-        Id,
-        Time,
-        Kind,
+        Id
+        Time
+        Kind
       }
     }
   }
 `;
 
-export const GET_SEATS = gql`  
+export const SEATS_QUERY = gql`  
   query GetSeats($payload: SeatsInput) {
     seats(payload: $payload) {
       Data {
-        Id,
-        Chair,
-        BookStatus,
+        Id
+        Chair
+        BookStatus
       }
     }
   }
 `;
 
-const SET_ROUTE = gql`
-  mutation SetRoute($payload: FutaInput) {
+const ROUTE_CLIENT_MUTATION = gql`
+  mutation setRoute($payload: Futa) {
     setRoute(payload: $payload) @client
   }
 `;
 
 const initial = {
   futa: {}
-} as AppState;
+} as AppCache;
 
 export const useFUTA = () => {
-  const { data } = useQuery<AppState>(FUTA_INFO);
+  const { data } = useQuery<AppCache>(FUTA_CLIENT_QUERY);
   return !data ? initial : data;
-}
+};
 
 export function useTimeTable() {
   const { futa } = useFUTA();
-  const result = useQuery<Query, QueryTimeTableArgs>(GET_TIMETABLE, {
+  const result = useQuery<Query, QueryTimeTableArgs>(TIME_TABLE_QUERY, {
     variables: {
       payload: {
         routeId: futa.routeId,
@@ -76,7 +76,7 @@ export function useTimeTable() {
 
 export function useSeats() {
   const { futa } = useFUTA();
-  const result = useQuery<Query, QuerySeatsArgs>(GET_SEATS, {
+  const result = useQuery<Query, QuerySeatsArgs>(SEATS_QUERY, {
     variables: {
       payload: {
         routeId: futa.routeId,
@@ -92,12 +92,10 @@ export function useSeats() {
   return result;
 }
 
-export function useMutationFuta(values: Partial<FutaState>) {
-  const { futa } = useFUTA();
-  const [setRoute] = useMutation(SET_ROUTE, {
+export function useMutationFuta(values?: Partial<Futa>) {
+  const [setRoute] = useMutation<{}, MutationSetRouteArgs>(ROUTE_CLIENT_MUTATION, {
     variables: {
       payload: {
-        ...futa,
         ...values,
       },
     },

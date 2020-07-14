@@ -43,5 +43,5 @@ export const FetchRenderProp: React.SFC<{ url: string }> = (props) => {
   return (
   <Fetch url={props.url}>
     {(data) => renderer(data)}
-  </Fetch>)
-}
+  </Fetch>);
+};

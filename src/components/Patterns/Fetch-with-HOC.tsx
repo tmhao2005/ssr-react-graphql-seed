@@ -41,7 +41,7 @@ export const withFetch = (Component: React.ComponentType<State>) => {
   }
 
   return (props: Props) => <Fetch {...props} />;
-}
+};
 
 export const FetchWithHOC = withFetch((payload) => (
   renderer(payload)

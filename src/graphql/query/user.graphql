@@ -1,8 +1,10 @@
 type User {
   id: Int
+  name: String
   login: String
   ratingCount: Int
   phone: String
+  phoneCustom: String
 }
 
 type Query {

@@ -1,7 +1,11 @@
 import fetch from "node-fetch";
-import { InMemoryCache, ApolloClient, ApolloLink, gql } from "apollo-boost";
 import { createHttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import ApolloClient from "apollo-client";
+import { ApolloLink } from "apollo-link";
+import { Futa } from "../generated/graphql";
+import { resolvers } from "./resolvers/client";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
@@ -15,30 +19,15 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const cache = new InMemoryCache();
 
-interface Base {
-  __typename: string;
-}
-export interface FutaState extends Base {
-  d1: string | null;
-  d2: string | null;
-  date: string | null;
-  time: string | null;
-  routeId: number | null;
-  timeId: number | null;
-  kind: string | null;
-  bookTelephone: string | null;
-  lovedTimes: string[];
-  lovedChairs: string[];
+export interface AppCache {
+  futa: Futa;
 }
 
-export interface AppState {
-  futa: FutaState;
-}
-
-cache.writeData<AppState>({
+cache.writeData<AppCache>({
   data: {
     futa: {
-      __typename: "futa",
+      id: '1',
+      __typename: "Futa",
       d1: null,
       d2: null,
       date: null,
@@ -68,51 +57,7 @@ export function buildClient(server: boolean) {
       }),
     ]),
 
-    resolvers: {
-      // User is the type returned
-      User: {
-        // This field is only existed on client side
-        phone: () => {
-          return "phone";
-        }
-      },
-
-      Mutation: {
-        setRoute: (_root, variables, { cache: mem, getCacheKey }) => {
-          const result = mem.readQuery({
-            query: gql`
-              {
-                futa @client {
-                  d1,
-                  d2,
-                  date,
-                  time,
-                  routeId,
-                  timeId,
-                  kind,
-                  lovedTimes,
-                  lovedChairs,
-                  bookTelephone,
-                }
-              }
-            `
-          });
-
-          if (__DEV__) {
-            console.log("Mutation", variables);
-          }
-
-          mem.writeData({
-            data: {
-              futa: {
-                ...result.futa,
-                ...variables.payload,
-              },
-            }
-          });
-        }
-      }
-    },
+    resolvers,
 
     // Won't work with dataSources, so we might stop using this
     // link: new SchemaLink({

@@ -14,6 +14,6 @@ export const Spinner: React.FC<Props> = ({ spin, tip, children }) => {
     <>
       {spin ? <div style={{ padding: 24, textAlign: "center" }}><Spin indicator={antIcon} tip={tip} /></div> : children}
     </>
-  )
-}
+  );
+};
 

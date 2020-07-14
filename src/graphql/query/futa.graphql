@@ -5,6 +5,10 @@ type RouteResult {
 
 type Route {
   Id: Int
+  DestCode: String
+  OriginCode: String
+  Distance: Int
+  Duration: Int
   Price: String
 }
 

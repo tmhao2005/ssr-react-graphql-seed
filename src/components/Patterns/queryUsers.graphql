@@ -1,8 +1,12 @@
 query QueryUsers($query: String) {
   users(query: $query) {
-    id,
-    login,
-    ratingCount,
-    phone @client,
+    ...fieldsOnUser
   }
+}
+
+fragment fieldsOnUser on User {
+  id
+  name
+  login
+  ratingCount
 }

@@ -82,5 +82,5 @@ export const TagInput: React.FC<Props> = ({ defaultTags, color, onChange }) => {
         </Tag>
       )}
     </>
-  )
-}
+  );
+};

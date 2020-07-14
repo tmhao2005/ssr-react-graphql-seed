@@ -10,7 +10,7 @@ export const Futa: React.FC = () => {
 
   const onDone = () => () => {
     slider.current.increment();
-  }
+  };
 
   return (
     <Carousel
@@ -29,5 +29,5 @@ export const Futa: React.FC = () => {
       <Step3 slider={slider} onDone={onDone()} />
       <Step4 slider={slider} onDone={onDone()} />
     </Carousel>
-  )
-}
+  );
+};

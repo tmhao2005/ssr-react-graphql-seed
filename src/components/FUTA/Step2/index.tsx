@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import { Button, List, PageHeader } from "antd";
 import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 import { useFUTA, useTimeTable, useMutationFuta } from "../shared";
-import { Query, QueryRouteArgs } from "../../../generated/graphql";
+import { Query, QueryRouteArgs, Futa, FieldsOnFutaFragmentDoc } from "../../../generated/graphql";
 import { Spinner } from "../Spinner";
-import { FutaState } from "../../../graphql/client";
 
 const GET_ROUTE = gql`  
   query GetRoute($payload: RouteInput) {
     route(payload: $payload) {
       Data {
         Id,
+        DestCode,
+        OriginCode,
       }
     }
   }
@@ -32,16 +33,15 @@ interface Props {
 }
 
 export const Step2: React.FC<Props> = (props) => {
-  const [info, setInfo] = React.useState<Partial<FutaState>>({});
-  const [move, setMove] = React.useState<boolean>(false);
+  const [info, setInfo] = React.useState<Partial<Futa>>({});
   const { futa } = useFUTA();
 
   const { data: route } = useQuery<Query, QueryRouteArgs>(GET_ROUTE, {
     variables: {
       payload: {
         date: futa.date,
-        d1: info.d1!,
-        d2: info.d2!,
+        d1: info.d1 || void 0,
+        d2: info.d2 || void 0,
       },
     },
     skip: !info.d1 || !info.d2,
@@ -61,6 +61,30 @@ export const Step2: React.FC<Props> = (props) => {
   // This will save the session once it has enough data
   useEffect(() => {
     if (info.d1 && info.d2 && route) {
+      const r0 = route.route.Data[0];
+
+      if (info.d1 === r0.OriginCode && info.d2 === r0.DestCode) {
+        setRoute({
+          variables: {
+            payload: {
+              ...futa,
+              ...info,
+              routeId: null,
+            },
+          }
+        }).then(() => {
+          setRoute({
+            variables: {
+              payload: {
+                ...futa,
+                ...info,
+                routeId: r0.Id,
+              },
+            }
+          });
+        });
+        return;
+      }
       setRoute();
     }
   }, [info, route]);
@@ -68,11 +92,11 @@ export const Step2: React.FC<Props> = (props) => {
   // The carousel renders twice making an error for now???
   // so I switched to `react-responsive-carousel` to fix the issue
   useEffect(() => {
-    if (timeTable && move) {
+    if (timeTable) {
       props.slider.current.increment();
-      setMove(false);
+      // setMove(false);
     }
-  }, [timeTable, move]);
+  }, [timeTable]);
 
   return (
     <>
@@ -93,7 +117,7 @@ export const Step2: React.FC<Props> = (props) => {
                 className={futa.d1 === d1 && futa.d2 === d2 ? "active" : void 0}
                 onClick={() => {
                   setInfo({ d1, d2, bookTelephone });
-                  setMove(true);
+                  // setMove(true);
                 }}
               >
                 {name}
@@ -103,5 +127,5 @@ export const Step2: React.FC<Props> = (props) => {
         />
       </Spinner>
     </>
-  )
-}
+  );
+};

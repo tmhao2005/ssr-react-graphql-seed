@@ -1,7 +1,7 @@
 import React from "react";
 import { List, Popover } from "antd";
-import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 import { User } from "../../generated/graphql";
 
 interface Props {
@@ -11,8 +11,9 @@ interface Props {
 const GET_USER = gql`
   query getUser($id: Int!) {
     user(id: $id) {
-      id,
-      phone,
+      id
+      phone
+      phoneCustom @client
     }
   }
 `;
@@ -20,7 +21,7 @@ const GET_USER = gql`
 export const UserItem: React.FC<Props> = ({ user }) => {
   const [show, onShow] = React.useState(false);
 
-  const { loading, error, data } = useQuery(GET_USER, {
+  const { loading, data } = useQuery(GET_USER, {
     variables: {
       id: user.id,
     },
@@ -41,5 +42,5 @@ export const UserItem: React.FC<Props> = ({ user }) => {
         />
       </Popover>
     </List.Item>
-  )
-}
+  );
+};

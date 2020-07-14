@@ -25,4 +25,4 @@ export const renderer = ({ loading, data }: State): React.ReactElement => (
       </ul>
     )}
   </>
-)
+);

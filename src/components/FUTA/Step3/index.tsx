@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, PageHeader, Tag, Divider } from "antd";
 import { useApolloClient } from "@apollo/react-hooks";
-import { useTimeTable, useSeats, useMutationFuta, GET_SEATS, useFUTA } from "../shared";
+import { useTimeTable, useSeats, useMutationFuta, SEATS_QUERY, useFUTA } from "../shared";
 import { Spinner } from "../Spinner";
 import { TagInput } from "../TagInput";
 import { TimeTable, Query } from "../../../generated/graphql";
@@ -40,13 +40,13 @@ export const Step3: React.FC<Props> = (props) => {
           ...state.suggestions,
           ...action.payload.suggestions,
         ]
-      }
+      };
     }
 
     return {
       ...state,
       ...action.payload,
-    }
+    };
 
   }, {
     lovedTimes: ["0:45", "9:00"],
@@ -89,7 +89,7 @@ export const Step3: React.FC<Props> = (props) => {
 
     table.forEach(async (item, idx) => {
       const { data } = await client.query<Query>({
-        query: GET_SEATS,
+        query: SEATS_QUERY,
         variables: {
           payload: {
             routeId: futa.routeId,
@@ -116,7 +116,7 @@ export const Step3: React.FC<Props> = (props) => {
                 item.Time,
               ],
             }
-          })
+          });
         }
       }
 
@@ -125,13 +125,13 @@ export const Step3: React.FC<Props> = (props) => {
           payload: {
             running: false,
           }
-        })
+        });
       }
     });
-  }
+  };
 
-  if (error) return <div>:((((</div>
-  if (!timeTable) return null;
+  if (error) return <div>:((((</div>;
+  if (!timeTable) return <div>No time available</div>;
 
   return (
     <>
@@ -148,10 +148,10 @@ export const Step3: React.FC<Props> = (props) => {
         title="Chọn lại điểm khởi hành"
       />
 
-      <h4>Thêm vào thời gian mà bạn muốn đi và số ghế mà bạn yêu thích</h4>
+      <h4>Thêm vào thời gian mà bạn muốn đi và số ghế mà bạn yêu thích để hệ thống gợi ý cho bạn chuyến đi thích hợp nhé!</h4>
       {futa.bookTelephone && (
-        <Button type="link" onClick={() => window.open(`tel:${futa.bookTelephone}`)}>
-          Nhấn vào đây để gọi đặt vé hen :|
+        <Button type="link">
+          <a href={`tel:${futa.bookTelephone}`}>Nhấn vào đây để gọi đặt vé hen :|</a>
         </Button>
       )}
       <Divider />
@@ -163,7 +163,7 @@ export const Step3: React.FC<Props> = (props) => {
               lovedTimes: tags,
               suggestions: [],
             }
-          })
+          });
         }} />
       </div>
       <div>
@@ -200,8 +200,8 @@ export const Step3: React.FC<Props> = (props) => {
         </>
       </Spinner>
     </>
-  )
-}
+  );
+};
 
 const SEARCHING_RADIUS = 2;  // 2 hours
 

@@ -10,8 +10,8 @@ interface Props {
 export const Step4: React.FC<Props> = (props) => {
   const { data: seats, error, loading } = useSeats();
 
-  if (error) return <div>:((((</div>
-  if (loading || !seats) return <div>Loading...</div>
+  if (error) return <div>:((((</div>;
+  if (loading || !seats) return <div>Loading...</div>;
 
   return (
     <>
@@ -28,6 +28,6 @@ export const Step4: React.FC<Props> = (props) => {
         </Tag>
       ))}
     </>
-  )
-}
+  );
+};
 

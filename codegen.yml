@@ -1,8 +1,22 @@
 schema: "./src/**/*.graphql"
 documents: "./src/**/*.graphql"
 generates:
-  ./src/generated/graphql.ts:
+  ./src/generated/graphql.tsx:
     plugins:
       - typescript
       - typescript-operations
+      - typescript-react-apollo
+      - fragment-matcher
       
+    # Add this to use hooks:
+    config:
+      withHooks: true
+      withMutationFn: true
+      withHOC: false
+      withComponent: false
+
+  # Fragment Matcher
+  ./src/generated/fragment-matcher.json:
+    schema: "./src/**/local.graphql"
+    plugins:
+      - fragment-matcher

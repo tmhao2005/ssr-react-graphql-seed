@@ -2,16 +2,14 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { List, PageHeader } from "antd";
 import { UserItem } from "../UserItem";
-import { QueryUsersQuery, QueryUsersQueryVariables } from "../../generated/graphql";
-import * as q from "./queryUsers.graphql";
+import { QueryUsersQuery, QueryUsersQueryVariables, QueryUsersDocument } from "../../generated/graphql";
 
 interface Props {
   query: string;
 }
 
 export const FetchWithGraphQL: React.FC<Props> = ({ query }) => {
-
-  const { loading, error, data } = useQuery<QueryUsersQuery, QueryUsersQueryVariables>(q.QueryUsers, {
+  const { loading, error, data } = useQuery<QueryUsersQuery, QueryUsersQueryVariables>(QueryUsersDocument, {
     variables: {
       query,
     },
@@ -35,5 +33,5 @@ export const FetchWithGraphQL: React.FC<Props> = ({ query }) => {
         />
       }
     </>
-  )
-}
+  );
+};

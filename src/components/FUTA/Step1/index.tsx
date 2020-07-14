@@ -8,26 +8,28 @@ interface Props {
 }
 
 export const Step1: React.FC<Props> = (props) => {
-  const [info, setInfo] = React.useState<any>({});
+  const [info, setInfo] = React.useState<Record<'date', string>>();
   const { futa } = useFUTA();
-  const hasAllParams = !!info.date;
 
-  const setRoute = useMutationFuta({
-    date: info.date,
-    timeId: null,
-    routeId: null,
-  });
+  const setRoute = useMutationFuta();
 
   React.useEffect(() => {
-    if (hasAllParams) {
-      setRoute().then(() => props.slider.current.increment());
+    if (info && info.date) {
+      setRoute({
+        variables: {
+          payload: {
+            date: info.date,
+            timeId: null,
+            routeId: null,
+          }
+        }
+      }).then(() => props.slider.current.increment());
     }
   }, [info]);
 
   return (
     <List
       header={<h4>Bạn muốn đi vào ngày nào?</h4>}
-      bordered={true}
       dataSource={buildProposedDate(10)}
       renderItem={(item) => (
         <List.Item key={item.name}>
@@ -42,8 +44,8 @@ export const Step1: React.FC<Props> = (props) => {
         </List.Item>
       )}
     />
-  )
-}
+  );
+};
 
 function getDateAhead(days: number) {
   const date = new Date();
@@ -96,6 +98,6 @@ function buildProposedDate(size: number) {
       name: formatted,
       date: formatted,
       tag: buildSuffix(idx, weekDay),
-    }
+    };
   });
 }

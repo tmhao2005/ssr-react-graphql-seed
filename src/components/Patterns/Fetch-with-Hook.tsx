@@ -20,7 +20,7 @@ const useFetch = (props: Props): State => {
     return {
       ...init,
       ...action.payload,
-    }
+    };
 
   }, {
     loading: true,
@@ -40,10 +40,10 @@ const useFetch = (props: Props): State => {
   }, [props.url]);
 
   return state;
-}
+};
 
 export const FetchWithHook: React.FC<Props> = (props) => {
   const result = useFetch({ url: props.url });
 
   return renderer(result);
-}
+};

@@ -33,6 +33,6 @@ export class Fetch extends React.Component<Props, State> {
   }
 
   render() {
-    return renderer(this.state)
+    return renderer(this.state);
   }
 }

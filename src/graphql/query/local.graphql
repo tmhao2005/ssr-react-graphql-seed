@@ -1,0 +1,47 @@
+type Futa {
+  id: String
+  d1: String
+  d2: String
+  date: String
+  time: String
+  routeId: Int
+  timeId: Int
+  kind: String
+  lovedTimes: [String]
+  lovedChairs: [String]
+  bookTelephone: String
+}
+
+fragment fieldsOnFuta on Futa {
+  d1
+  d2
+  date
+  time
+  routeId
+  timeId
+  kind
+  lovedTimes
+  lovedChairs
+  bookTelephone
+}
+
+input FutaMutationInput {
+  d1: String
+  d2: String
+  date: String
+  time: String
+  routeId: Int
+  timeId: Int
+  kind: String
+  lovedTimes: [String]
+  lovedChairs: [String]
+  bookTelephone: String
+}
+
+type Mutation {
+  setRoute(payload: FutaMutationInput): Futa
+}
+
+extend type User {
+  phone: String
+}
