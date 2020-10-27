@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Button, List, PageHeader } from "antd";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import { useFUTA, useTimeTable, useMutationFuta } from "../shared";
+import { useQueryFUTA, useQueryTimeTable, useMutationFuta } from "../shared";
 import { Query, QueryRouteArgs, Futa, FieldsOnFutaFragmentDoc } from "../../../generated/graphql";
 import { Spinner } from "../Spinner";
 
@@ -23,6 +23,8 @@ const proposedDestinations = [
   ["RACHGIA", "TPHCM", "Rạch Giá - HCM", "02973691691"],
   ["TPHCM", "CANTHO", "HCM - Cần Thơ"],
   ["CANTHO", "TPHCM", "Cần Thơ - HCM"],
+  ["TPHCM", "DALAT", "HCM - Đà lạt"],
+  ["DALAT", "TPHCM", "Đà lạt - HCM"],
   ["TPHCM", "NHATRANG", "HCM - Nha Trang"],
   ["NHATRANG", "TPHCM", "Nha Trang - HCM"],
 ];
@@ -34,7 +36,7 @@ interface Props {
 
 export const Step2: React.FC<Props> = (props) => {
   const [info, setInfo] = React.useState<Partial<Futa>>({});
-  const { futa } = useFUTA();
+  const { futa } = useQueryFUTA();
 
   const { data: route } = useQuery<Query, QueryRouteArgs>(GET_ROUTE, {
     variables: {
@@ -48,7 +50,7 @@ export const Step2: React.FC<Props> = (props) => {
   });
 
   // Preload to cache them all if routeId has set
-  const { data: timeTable, loading: timeTableLoading } = useTimeTable();
+  const { data: timeTable, loading: timeTableLoading } = useQueryTimeTable();
 
   const setRoute = useMutationFuta({
     ...info,

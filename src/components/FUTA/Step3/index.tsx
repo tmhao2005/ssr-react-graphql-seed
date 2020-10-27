@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, PageHeader, Tag, Divider } from "antd";
 import { useApolloClient } from "@apollo/react-hooks";
-import { useTimeTable, useSeats, useMutationFuta, SEATS_QUERY, useFUTA } from "../shared";
+import { useQueryTimeTable, useQuerySeats, useMutationFuta, SEATS_QUERY, useQueryFUTA } from "../shared";
 import { Spinner } from "../Spinner";
 import { TagInput } from "../TagInput";
 import { TimeTable, Query } from "../../../generated/graphql";
@@ -26,9 +26,9 @@ interface Action {
 type Reducer = (state: State, action: Action) => State;
 
 export const Step3: React.FC<Props> = (props) => {
-  const { futa } = useFUTA();
-  const { data: timeTable } = useTimeTable();
-  const { data: seats, loading, error } = useSeats();
+  const { futa } = useQueryFUTA();
+  const { data: timeTable } = useQueryTimeTable();
+  const { data: seats, loading, error } = useQuerySeats();
   const client = useApolloClient();
 
   const [time, setTime] = React.useState<any>({});

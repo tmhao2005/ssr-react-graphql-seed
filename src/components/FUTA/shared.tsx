@@ -54,13 +54,13 @@ const initial = {
   futa: {}
 } as AppCache;
 
-export const useFUTA = () => {
+export const useQueryFUTA = () => {
   const { data } = useQuery<AppCache>(FUTA_CLIENT_QUERY);
   return !data ? initial : data;
 };
 
-export function useTimeTable() {
-  const { futa } = useFUTA();
+export function useQueryTimeTable() {
+  const { futa } = useQueryFUTA();
   const result = useQuery<Query, QueryTimeTableArgs>(TIME_TABLE_QUERY, {
     variables: {
       payload: {
@@ -74,8 +74,8 @@ export function useTimeTable() {
   return result;
 }
 
-export function useSeats() {
-  const { futa } = useFUTA();
+export function useQuerySeats() {
+  const { futa } = useQueryFUTA();
   const result = useQuery<Query, QuerySeatsArgs>(SEATS_QUERY, {
     variables: {
       payload: {

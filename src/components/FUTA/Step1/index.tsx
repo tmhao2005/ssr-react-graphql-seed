@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, List, Tag } from "antd";
-import { useMutationFuta, useFUTA } from "../shared";
+import { useMutationFuta, useQueryFUTA } from "../shared";
 
 interface Props {
   slider: any;
@@ -9,7 +9,7 @@ interface Props {
 
 export const Step1: React.FC<Props> = (props) => {
   const [info, setInfo] = React.useState<Record<'date', string>>();
-  const { futa } = useFUTA();
+  const { futa } = useQueryFUTA();
 
   const setRoute = useMutationFuta();
 

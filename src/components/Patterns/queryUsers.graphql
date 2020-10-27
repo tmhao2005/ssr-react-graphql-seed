@@ -4,9 +4,17 @@ query QueryUsers($query: String) {
   }
 }
 
+query GetUser($id: Int!) {
+  user(id: $id) {
+    ...fieldsOnUser
+    phone
+    phoneCustom @client
+  }
+}
+
 fragment fieldsOnUser on User {
   id
   name
   login
-  ratingCount
+  ratingCount  
 }

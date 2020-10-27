@@ -16,7 +16,13 @@ EXPOSE 3000
 
 # CMD ["node", "server.js"]
 
-# View logs
+# Build your app
+# $ docker build -t tmhao/go1player .
+
+# Run
+# $ docker run -p 3001:3000 -d tmhao/go1player
+
+# View logs to see the log of server started mostly: `npm start`
 # $ docker logs <YOUR_CONTAINER_ID>
 
 # Access to the container 
@@ -24,3 +30,6 @@ EXPOSE 3000
 
 # Rename your repository/tag
 # $ docker tag <YOUR_3_FIRST_DIGIT_OF_YOUR_IMAGE> tmhao/graphql-seed-app
+
+# Stop a container
+# $ docker stop <YOUR_CONTAINER_ID>

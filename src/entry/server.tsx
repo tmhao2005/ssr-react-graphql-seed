@@ -104,6 +104,7 @@ if (!hot) {
 }
 
 // For webpack-hot-server
+// This is very important for dev or you will receive error like: TypeError: Cannot read property 'headersSent' of undefined
 export default function serverRenderer() {
   return (req, res, next) => {
     app.handle(req, res, next);

@@ -1,27 +1,16 @@
 import React from "react";
 import { List, Popover } from "antd";
 import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import { User } from "../../generated/graphql";
+import { User, GetUserDocument, Query, GetUserQueryVariables } from "../../generated/graphql";
 
 interface Props {
   user: User;
 }
 
-const GET_USER = gql`
-  query getUser($id: Int!) {
-    user(id: $id) {
-      id
-      phone
-      phoneCustom @client
-    }
-  }
-`;
-
 export const UserItem: React.FC<Props> = ({ user }) => {
   const [show, onShow] = React.useState(false);
 
-  const { loading, data } = useQuery(GET_USER, {
+  const { loading, data } = useQuery<Query, GetUserQueryVariables>(GetUserDocument, {
     variables: {
       id: user.id,
     },

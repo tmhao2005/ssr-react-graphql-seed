@@ -1,6 +1,6 @@
 import React from "react";
 import { PageHeader, Divider, Tag } from "antd";
-import { useSeats } from "../shared";
+import { useQuerySeats } from "../shared";
 
 interface Props {
   slider: any;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const Step4: React.FC<Props> = (props) => {
-  const { data: seats, error, loading } = useSeats();
+  const { data: seats, error, loading } = useQuerySeats();
 
   if (error) return <div>:((((</div>;
   if (loading || !seats) return <div>Loading...</div>;
