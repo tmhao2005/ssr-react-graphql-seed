@@ -83,11 +83,29 @@ export type SeatsInput = {
 
 export type Query = {
   __typename?: 'Query';
+  photos?: Maybe<Array<Maybe<Review>>>;
+  review?: Maybe<Review>;
+  reviews?: Maybe<Array<Maybe<Review>>>;
   route?: Maybe<RouteResult>;
   seats?: Maybe<SeatsResult>;
   timeTable?: Maybe<TimeTableResult>;
   user?: Maybe<User>;
   users?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type QueryPhotosArgs = {
+  id?: Maybe<Scalars['ID']>;
+};
+
+
+export type QueryReviewArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryReviewsArgs = {
+  query?: Maybe<Scalars['String']>;
 };
 
 
@@ -163,6 +181,38 @@ export type User = {
   ratingCount?: Maybe<Scalars['Int']>;
 };
 
+export type Dimension = {
+  __typename?: 'Dimension';
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type PhotoDimensions = {
+  __typename?: 'PhotoDimensions';
+  original?: Maybe<Dimension>;
+  small?: Maybe<Dimension>;
+};
+
+export type PhotoData = {
+  __typename?: 'PhotoData';
+  basename?: Maybe<Scalars['String']>;
+  dimensions?: Maybe<PhotoDimensions>;
+};
+
+export type Photo = {
+  __typename?: 'Photo';
+  id?: Maybe<Scalars['ID']>;
+  data?: Maybe<PhotoData>;
+};
+
+export type Review = {
+  __typename?: 'Review';
+  id?: Maybe<Scalars['ID']>;
+  userId?: Maybe<Scalars['String']>;
+  photos?: Maybe<Array<Maybe<Photo>>>;
+};
+
 export type QueryUsersQueryVariables = {
   query?: Maybe<Scalars['String']>;
 };
@@ -193,6 +243,35 @@ export type GetUserQuery = (
 export type FieldsOnUserFragment = (
   { __typename?: 'User' }
   & Pick<User, 'id' | 'name' | 'login' | 'ratingCount'>
+);
+
+export type PhotosQueryVariables = {
+  id?: Maybe<Scalars['ID']>;
+};
+
+
+export type PhotosQuery = (
+  { __typename?: 'Query' }
+  & { photos?: Maybe<Array<Maybe<(
+    { __typename?: 'Review' }
+    & Pick<Review, 'userId'>
+    & { photos?: Maybe<Array<Maybe<(
+      { __typename?: 'Photo' }
+      & { data?: Maybe<(
+        { __typename?: 'PhotoData' }
+        & { dimensions?: Maybe<(
+          { __typename?: 'PhotoDimensions' }
+          & { small?: Maybe<(
+            { __typename?: 'Dimension' }
+            & Pick<Dimension, 'url'>
+          )>; original?: Maybe<(
+            { __typename?: 'Dimension' }
+            & Pick<Dimension, 'url'>
+          )>; }
+        )>; }
+      )>; }
+    )>>>; }
+  )>>>; }
 );
 
 export type FieldsOnFutaFragment = (
@@ -290,6 +369,51 @@ export function useGetUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHook
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = ApolloReactCommon.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const PhotosDocument = gql`
+    query Photos($id: ID) {
+  photos(id: $id) {
+    userId
+    photos {
+      data {
+        dimensions {
+          small {
+            url
+          }
+          original {
+            url
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __usePhotosQuery__
+ *
+ * To run a query within a React component, call `usePhotosQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePhotosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePhotosQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePhotosQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PhotosQuery, PhotosQueryVariables>) {
+        return ApolloReactHooks.useQuery<PhotosQuery, PhotosQueryVariables>(PhotosDocument, baseOptions);
+      }
+export function usePhotosLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PhotosQuery, PhotosQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<PhotosQuery, PhotosQueryVariables>(PhotosDocument, baseOptions);
+        }
+export type PhotosQueryHookResult = ReturnType<typeof usePhotosQuery>;
+export type PhotosLazyQueryHookResult = ReturnType<typeof usePhotosLazyQuery>;
+export type PhotosQueryResult = ApolloReactCommon.QueryResult<PhotosQuery, PhotosQueryVariables>;
 
       export interface IntrospectionResultData {
         __schema: {

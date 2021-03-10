@@ -7,7 +7,37 @@ type User {
   phoneCustom: String
 }
 
+type Dimension {
+  url: String
+  width: Int
+  height: Int
+}
+
+type PhotoDimensions {
+  original: Dimension
+  small: Dimension
+}
+
+type PhotoData {
+  basename: String
+  dimensions: PhotoDimensions
+}
+
+type Photo {
+  id: ID
+  data: PhotoData
+}
+
+type Review {
+  id: ID
+  userId: String
+  photos: [Photo]
+}
+
 type Query {
   users(query: String): [User]
   user(id: Int): User
+  reviews(query: String): [Review]
+  review(id: Int): Review
+  photos(id: ID): [Review]
 }

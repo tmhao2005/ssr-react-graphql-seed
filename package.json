@@ -24,11 +24,21 @@
   ],
   "author": "Hao Tran",
   "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/preset-react": "^7.9.4",
-    "@babel/preset-typescript": "^7.9.0",
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "@babel/preset-typescript": "^7.13.0",
     "@graphql-codegen/cli": "^1.14.0",
     "@graphql-codegen/fragment-matcher": "^1.15.0",
     "@graphql-codegen/typescript": "^1.14.0",
@@ -51,6 +61,8 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-react": "^7.20.0",
     "file-loader": "^6.0.0",
+    "husky": "^4.3.6",
+    "lint-staged": "^10.5.4",
     "ora": "^4.0.4",
     "prettier": "^2.0.5",
     "ts-node": "^8.10.1",
@@ -58,7 +70,7 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.3.0",
     "tslint-react": "^5.0.0",
-    "typescript": "^3.9.2",
+    "typescript": "^4.2.3",
     "webpack": "^4.43.0",
     "webpack-assets-manifest": "^3.1.1",
     "webpack-dev-middleware": "^3.7.2",
@@ -76,7 +88,7 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
-    "antd": "^4.2.4",
+    "antd": "^4.13.1",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-datasource-rest": "^0.9.0",

@@ -33,3 +33,5 @@ EXPOSE 3000
 
 # Stop a container
 # $ docker stop <YOUR_CONTAINER_ID>
+
+# docker run -p 8080:80 -e 'API_ENDPOINT=https://api-dev.go1.co/' -e 'BASE_URL=/' b5ba89d0f35b

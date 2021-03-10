@@ -39,11 +39,7 @@ const base = {
             options: {
               cacheDirectory: true,
               presets: [
-                ["@babel/env", {
-                  "targets": {
-                    "node": "current"
-                  }
-                }],
+                ["@babel/env"],
                 "@babel/typescript",
                 "@babel/react",
               ],

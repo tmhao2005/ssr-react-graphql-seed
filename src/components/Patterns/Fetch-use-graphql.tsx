@@ -1,37 +1,101 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { List, PageHeader } from "antd";
+import {
+ Button, Drawer, List, PageHeader, Select, Space
+} from "antd";
 import { UserItem } from "../UserItem";
-import { QueryUsersQuery, QueryUsersQueryVariables, QueryUsersDocument } from "../../generated/graphql";
+import {
+ QueryUsersQuery, QueryUsersQueryVariables, QueryUsersDocument
+} from "../../generated/graphql";
+import { Review } from "../../pages/Review";
 
-interface Props {
-  query: string;
-}
+const Option = Select.Option;
 
-export const FetchWithGraphQL: React.FC<Props> = ({ query }) => {
-  const { loading, error, data } = useQuery<QueryUsersQuery, QueryUsersQueryVariables>(QueryUsersDocument, {
+export const FetchWithGraphQL: React.FC<{}> = () => {
+  const [offset, setOffset] = React.useState<number>(0);
+  const [code, setCode] = React.useState<string>('Tân Bình');
+  const [chosenUser, setChosenUser] = React.useState<string>();
+
+  const urlMaker = (values?: any) => {
+    const sp = new URLSearchParams({
+      cityCode: `Hồ+Chí+Minh`,
+      mode: 'directory',
+      orderBy: 'byRate',
+      districtCode: code,
+      offset,
+      ...values,
+    });
+
+    return sp.toString();
+  };
+
+  const { loading, error, data, fetchMore } = useQuery<QueryUsersQuery, QueryUsersQueryVariables>(QueryUsersDocument, {
     variables: {
-      query,
+      query: urlMaker(),
     },
-    skip: !query,
+    // skip: !query,
   });
+
+  const handleChange = (code: string) => {
+    setCode(code);
+  };
 
   if (error) return <p>Error :(</p>;
 
   return (
     <>
       <PageHeader
-        title="with GraphQL"
+        title={`Users ${data && data.users.length > 0 ? `${data.users.length}` : ''}`}
       />
 
-      {loading && "Loading..."}
-      {!loading && data && data.users &&
-        <List
-          itemLayout="horizontal"
-          dataSource={data.users}
-          renderItem={item => <UserItem user={item} />}
-        />
-      }
+      <Space direction="vertical" style={{
+ width: '100%'
+}}>
+        <Select defaultValue={code} style={{
+ width: 120
+}} onChange={handleChange}>
+          <Option value="Tân Bình">TB</Option>
+          <Option value="Tân Phú">TP</Option>
+          <Option value="Phú Nhuận">PN</Option>
+          <Option value="Quận 10">Q10</Option>
+          <Option value="Quận 1">Q1</Option>
+        </Select>
+
+        {
+          <List
+            itemLayout="horizontal"
+            dataSource={data ? data.users : []}
+            renderItem={item => <UserItem user={item} onClick={setChosenUser} />}
+            loading={loading}
+            loadMore={
+              <Button type="primary" ghost style={{
+ marginTop: 8
+}} onClick={() => {
+                const newOffset = offset + 20;
+                setOffset(newOffset);
+                fetchMore({
+                  variables: {
+                    query: urlMaker({
+                      offset: newOffset,
+                    }),
+                  },
+                  updateQuery: (prev, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) return prev;
+                    return Object.assign({}, prev, {
+                      users: [...prev.users, ...fetchMoreResult.users]
+                    });
+                  }
+                });
+              }}>
+                Load more...
+              </Button>
+            }
+          />
+        }
+        <Drawer visible={!!chosenUser} width={'100%'} destroyOnClose={true} onClose={() => setChosenUser(undefined)}>
+          <Review userId={chosenUser} />
+        </Drawer>
+      </Space>
     </>
   );
 };

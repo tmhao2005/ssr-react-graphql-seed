@@ -18,6 +18,18 @@ export const userResolvers: IResolvers<any, DataSources> = {
     user: async (_source, { id }, { dataSources }) => {
       return await dataSources.gitAPI.getOne(id);
     },
+
+    reviews: async (_source, { query }, { dataSources }) => {
+      return dataSources.gitAPI.getReviews(query);
+    },
+
+    review: async (_source, { id }, { dataSources }) => {
+      return dataSources.gitAPI.getReview(id);
+    },
+
+    photos: async (_source, { id }, { dataSources }) => {
+      return dataSources.gitAPI.getPhotos(id);
+    },
   },
 };
 

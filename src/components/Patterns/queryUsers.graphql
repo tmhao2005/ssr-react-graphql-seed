@@ -18,3 +18,21 @@ fragment fieldsOnUser on User {
   login
   ratingCount  
 }
+
+query Photos($id: ID) {
+  photos(id: $id) {
+    userId,
+    photos {
+      data {
+        dimensions {
+          small {
+            url
+          }
+          original {
+            url
+          }
+        }
+      }
+    }
+  }
+}
