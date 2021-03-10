@@ -1,6 +1,7 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
+    "skipLibCheck": true,
     "jsx": "react",
     "module": "CommonJS",
     "target": "ES5",

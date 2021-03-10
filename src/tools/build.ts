@@ -17,7 +17,7 @@ function bundle() {
       }
 
       spinner.info(stats.toString(serverConfig.stats));
-      return resolve();
+      return resolve(true);
     });
   });
 }
