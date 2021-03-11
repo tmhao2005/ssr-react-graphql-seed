@@ -36,8 +36,9 @@ export const FetchWithGraphQL: React.FC<{}> = () => {
     // skip: !query,
   });
 
-  const handleChange = (code: string) => {
-    setCode(code);
+  const handleChange = (value: string) => {
+    setCode(value);
+    setOffset(0);
   };
 
   if (error) return <p>Error :(</p>;
@@ -68,7 +69,7 @@ export const FetchWithGraphQL: React.FC<{}> = () => {
             renderItem={item => <UserItem user={item} onClick={setChosenUser} />}
             loading={loading}
             loadMore={
-              <Button type="primary" ghost style={{
+              <Button type="primary" ghost={true} style={{
  marginTop: 8
 }} onClick={() => {
                 const newOffset = offset + 20;
@@ -81,8 +82,9 @@ export const FetchWithGraphQL: React.FC<{}> = () => {
                   },
                   updateQuery: (prev, { fetchMoreResult }) => {
                     if (!fetchMoreResult) return prev;
+
                     return Object.assign({}, prev, {
-                      users: [...prev.users, ...fetchMoreResult.users]
+                      users: [...data.users, ...fetchMoreResult.users]
                     });
                   }
                 });
@@ -92,7 +94,13 @@ export const FetchWithGraphQL: React.FC<{}> = () => {
             }
           />
         }
-        <Drawer visible={!!chosenUser} width={'100%'} destroyOnClose={true} onClose={() => setChosenUser(undefined)}>
+        <Drawer 
+          visible={!!chosenUser} 
+          destroyOnClose={true} 
+          onClose={() => setChosenUser(undefined)}
+          width={'100%'}
+          bodyStyle={{ display: 'flex', flexDirection: 'column' }}
+        >
           <Review userId={chosenUser} />
         </Drawer>
       </Space>

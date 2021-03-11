@@ -1,6 +1,6 @@
 import React from "react";
 import {
- List, Popover
+ List, Popover, Space, Typography
 } from "antd";
 import { useQuery } from "@apollo/react-hooks";
 import { SelectOutlined } from "@ant-design/icons";
@@ -29,17 +29,26 @@ export const UserItem: React.FunctionComponent<Props> = ({ user, onClick }) => {
       <Popover onVisibleChange={onShow} trigger="click" content={() =>(
         <>
           {loading && "Loading..."}
-          {!loading && data && data.user.phone}
+          {!loading && data && (
+            <Space direction="vertical">
+              <Typography.Link onClick={() => {
+                onShow(false)
+                onClick?.(user.id as any);
+              }}>{data.user.name}</Typography.Link>
+              <Typography.Text mark={true}>{data.user.phone}</Typography.Text>
+            </Space>
+          )}
         </>
       )}>
         <List.Item.Meta
-          title={user.id}
+          title={`${user.id} (${user.price})`}
           description={user.ratingCount}
         />
       </Popover>
-      {/* <Link to={`/review/${user.id}`}> */}
+      
+      {/* <Link to={`/review/${user.id}`}>
         <SelectOutlined onClick={() => onClick?.(user.id as any)} />
-      {/* </Link> */}
+      </Link> */}
     </List.Item>
   );
 };

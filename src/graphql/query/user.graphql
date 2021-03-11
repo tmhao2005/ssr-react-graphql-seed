@@ -3,6 +3,8 @@ type User {
   name: String
   login: String
   ratingCount: Int
+  price: String
+  status: String
   phone: String
   phoneCustom: String
 }

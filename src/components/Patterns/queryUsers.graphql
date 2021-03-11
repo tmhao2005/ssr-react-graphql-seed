@@ -16,7 +16,8 @@ fragment fieldsOnUser on User {
   id
   name
   login
-  ratingCount  
+  ratingCount
+  price
 }
 
 query Photos($id: ID) {

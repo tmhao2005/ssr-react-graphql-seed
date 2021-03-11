@@ -13,7 +13,7 @@ export type Scalars = {
 
 export type RouteResult = {
   __typename?: 'RouteResult';
-  Data?: Maybe<Array<Maybe<Route>>>;
+  Data?: Maybe<Maybe<Route>[]>;
   Status?: Maybe<Scalars['Int']>;
 };
 
@@ -40,13 +40,13 @@ export type TimeTable = {
 export type TimeTableResult = {
   __typename?: 'TimeTableResult';
   Status?: Maybe<Scalars['Int']>;
-  Data?: Maybe<Array<Maybe<TimeTable>>>;
+  Data?: Maybe<Maybe<TimeTable>[]>;
 };
 
 export type SeatsResult = {
   __typename?: 'SeatsResult';
   Status?: Maybe<Scalars['Int']>;
-  Data?: Maybe<Array<Maybe<Seat>>>;
+  Data?: Maybe<Maybe<Seat>[]>;
 };
 
 export type Seat = {
@@ -83,14 +83,14 @@ export type SeatsInput = {
 
 export type Query = {
   __typename?: 'Query';
-  photos?: Maybe<Array<Maybe<Review>>>;
+  photos?: Maybe<Maybe<Review>[]>;
   review?: Maybe<Review>;
-  reviews?: Maybe<Array<Maybe<Review>>>;
+  reviews?: Maybe<Maybe<Review>[]>;
   route?: Maybe<RouteResult>;
   seats?: Maybe<SeatsResult>;
   timeTable?: Maybe<TimeTableResult>;
   user?: Maybe<User>;
-  users?: Maybe<Array<Maybe<User>>>;
+  users?: Maybe<Maybe<User>[]>;
 };
 
 
@@ -143,8 +143,8 @@ export type Futa = {
   routeId?: Maybe<Scalars['Int']>;
   timeId?: Maybe<Scalars['Int']>;
   kind?: Maybe<Scalars['String']>;
-  lovedTimes?: Maybe<Array<Maybe<Scalars['String']>>>;
-  lovedChairs?: Maybe<Array<Maybe<Scalars['String']>>>;
+  lovedTimes?: Maybe<Maybe<Scalars['String']>[]>;
+  lovedChairs?: Maybe<Maybe<Scalars['String']>[]>;
   bookTelephone?: Maybe<Scalars['String']>;
 };
 
@@ -156,8 +156,8 @@ export type FutaMutationInput = {
   routeId?: Maybe<Scalars['Int']>;
   timeId?: Maybe<Scalars['Int']>;
   kind?: Maybe<Scalars['String']>;
-  lovedTimes?: Maybe<Array<Maybe<Scalars['String']>>>;
-  lovedChairs?: Maybe<Array<Maybe<Scalars['String']>>>;
+  lovedTimes?: Maybe<Maybe<Scalars['String']>[]>;
+  lovedChairs?: Maybe<Maybe<Scalars['String']>[]>;
   bookTelephone?: Maybe<Scalars['String']>;
 };
 
@@ -178,7 +178,9 @@ export type User = {
   name?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   phoneCustom?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['String']>;
   ratingCount?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['String']>;
 };
 
 export type Dimension = {
@@ -210,7 +212,7 @@ export type Review = {
   __typename?: 'Review';
   id?: Maybe<Scalars['ID']>;
   userId?: Maybe<Scalars['String']>;
-  photos?: Maybe<Array<Maybe<Photo>>>;
+  photos?: Maybe<Maybe<Photo>[]>;
 };
 
 export type QueryUsersQueryVariables = {
@@ -220,10 +222,10 @@ export type QueryUsersQueryVariables = {
 
 export type QueryUsersQuery = (
   { __typename?: 'Query' }
-  & { users?: Maybe<Array<Maybe<(
+  & { users?: Maybe<Maybe<(
     { __typename?: 'User' }
     & FieldsOnUserFragment
-  )>>>; }
+  )>[]> }
 );
 
 export type GetUserQueryVariables = {
@@ -237,12 +239,12 @@ export type GetUserQuery = (
     { __typename?: 'User' }
     & Pick<User, 'phone' | 'phoneCustom'>
     & FieldsOnUserFragment
-  )>; }
+  )> }
 );
 
 export type FieldsOnUserFragment = (
   { __typename?: 'User' }
-  & Pick<User, 'id' | 'name' | 'login' | 'ratingCount'>
+  & Pick<User, 'id' | 'name' | 'login' | 'ratingCount' | 'price'>
 );
 
 export type PhotosQueryVariables = {
@@ -252,10 +254,10 @@ export type PhotosQueryVariables = {
 
 export type PhotosQuery = (
   { __typename?: 'Query' }
-  & { photos?: Maybe<Array<Maybe<(
+  & { photos?: Maybe<Maybe<(
     { __typename?: 'Review' }
     & Pick<Review, 'userId'>
-    & { photos?: Maybe<Array<Maybe<(
+    & { photos?: Maybe<Maybe<(
       { __typename?: 'Photo' }
       & { data?: Maybe<(
         { __typename?: 'PhotoData' }
@@ -264,14 +266,14 @@ export type PhotosQuery = (
           & { small?: Maybe<(
             { __typename?: 'Dimension' }
             & Pick<Dimension, 'url'>
-          )>; original?: Maybe<(
+          )>, original?: Maybe<(
             { __typename?: 'Dimension' }
             & Pick<Dimension, 'url'>
-          )>; }
-        )>; }
-      )>; }
-    )>>>; }
-  )>>>; }
+          )> }
+        )> }
+      )> }
+    )>[]> }
+  )>[]> }
 );
 
 export type FieldsOnFutaFragment = (
@@ -285,6 +287,7 @@ export const FieldsOnUserFragmentDoc = gql`
   name
   login
   ratingCount
+  price
 }
     `;
 export const FieldsOnFutaFragmentDoc = gql`
@@ -432,3 +435,4 @@ export type PhotosQueryResult = ApolloReactCommon.QueryResult<PhotosQuery, Photo
   }
 };
       export default result;
+    

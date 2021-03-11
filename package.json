@@ -34,7 +34,7 @@
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [
-      "eslint --fix"
+      "tslint -c tslint.json --fix"
     ]
   },
   "devDependencies": {
@@ -101,6 +101,7 @@
     "apollo-link-schema": "^1.2.5",
     "apollo-server": "^2.13.1",
     "apollo-server-express": "^2.14.2",
+    "axios": "^0.21.1",
     "create-emotion-server": "^10.0.27",
     "dotenv": "^8.2.0",
     "emotion": "^10.0.27",

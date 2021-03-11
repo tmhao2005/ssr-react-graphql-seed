@@ -37,7 +37,7 @@ const base = {
           {
             loader: "babel-loader",
             options: {
-              cacheDirectory: true,
+              // cacheDirectory: true,
               presets: [
                 ["@babel/env"],
                 "@babel/typescript",

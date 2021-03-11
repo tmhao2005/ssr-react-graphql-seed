@@ -1,4 +1,5 @@
 import { RESTDataSource } from "apollo-datasource-rest";
+import axios from "axios";
 import {
  Review, User
 } from "../../generated/graphql";
@@ -23,9 +24,16 @@ export class GitAPI extends RESTDataSource {
   }
 
   async getReview(id: string) {
-    const res = await this.get<{ data: { review: Review } }>(`escort/reviews/${id}`);
+    try {
+      const res = await axios.get<any, any>(`${this.baseURL}/escort/reviews/${id}`, {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        withCredentials: true,
+      });
 
-    return res.data.review;
+      return res.data.data.review; 
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async getPhotos(userId: number) {
