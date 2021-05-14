@@ -10,7 +10,8 @@
   "rules": {
     "jsx-no-lambda": false,
     "no-console": false,
-    "no-var-requires": false
+    "no-var-requires": false,
+    "no-unused-expression": false
   },
   "linterOptions": {
     "exclude": [

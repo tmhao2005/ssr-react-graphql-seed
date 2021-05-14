@@ -1,20 +1,14 @@
 import React from "react";
 import { injectGlobal } from "emotion";
 
-import {
- Layout, Menu
-} from "antd";
-import {
- Route, Switch, Link, Redirect
-} from "react-router-dom";
-import {
- css, Global
-} from "@emotion/core";
+import { Layout, Menu } from "antd";
+import { Route, Switch, Link, Redirect } from "react-router-dom";
+import { css, Global } from "@emotion/core";
 import { Fetch } from "../Patterns/Fetch";
 import { FetchRenderProp } from "../Patterns/Fetch-render-prop";
 import { FetchWithHOC } from "../Patterns/Fetch-with-HOC";
 import { FetchWithHook } from "../Patterns/Fetch-with-Hook";
-import { FetchWithGraphQL } from "../Patterns/Fetch-use-graphql";
+import { ListUser } from "../../pages/ListUser";
 import { Responsive } from "../Responsive";
 import { Futa } from "../FUTA";
 import { Review } from "../../pages/Review";
@@ -35,28 +29,27 @@ export const App: React.FC = () => {
   const url = "https://api.github.com/search/users?q=tmhao2005";
 
   return (
-    <Layout style={{
- minHeight: "100vh"
-}}>
-      <Global styles={
-          css`
+    <Layout
+      style={{
+        minHeight: "100vh",
+      }}
+    >
+      <Global
+        styles={css`
           * {
             box-sizing: border-box;
           }
           @font-face {
-            font-family: 'Patrick Hand SC';
+            font-family: "Patrick Hand SC";
             font-style: normal;
             font-weight: 400;
-            src: local('Patrick Hand SC'),
-              local('PatrickHandSC-Regular'),
+            src: local("Patrick Hand SC"), local("PatrickHandSC-Regular"),
               url(https://fonts.gstatic.com/s/patrickhandsc/v4/OYFWCgfCR-7uHIovjUZXsZ71Uis0Qeb9Gqo8IZV7ckE.woff2)
-                format('woff2');
-            unicode-range: U+0100-024f, U+1-1eff,
-              U+20a0-20ab, U+20ad-20cf, U+2c60-2c7f,
-              U+A720-A7FF;
+                format("woff2");
+            unicode-range: U+0100-024f, U+1-1eff, U+20a0-20ab, U+20ad-20cf,
+              U+2c60-2c7f, U+A720-A7FF;
           }
-          `
-        }
+        `}
       />
       <Header>
         <div className="logo" />
@@ -71,39 +64,48 @@ export const App: React.FC = () => {
         </Menu>
       </Header>
 
-      <Content style={{
- padding: "24px"
-}}>
+      <Content
+        style={{
+          padding: "24px",
+        }}
+      >
         <Responsive>
-          <div style={{
- backgroundColor: "#fff", padding: "24px"
-}}>
+          <div
+            style={{
+              backgroundColor: "#fff",
+              padding: "24px",
+            }}
+          >
             <Switch>
-              <Route path="/futa" render={() => (<Futa />)} />
-              <Route path="/main" render={() => (
+              <Route path="/futa" render={() => <Futa />} />
+              <Route
+                path="/main"
+                render={() => (
                   <>
-                    <FetchWithGraphQL />
+                    <ListUser />
                   </>
                 )}
               />
               <Route path="/review/:id" component={Review} />
-              <Route path="/patterns" render={() => (
+              <Route
+                path="/patterns"
+                render={() => (
                   <>
-                  <hr />
-                  <h2>normal</h2>
-                  <Fetch url={url} />
+                    <hr />
+                    <h2>normal</h2>
+                    <Fetch url={url} />
 
-                  <hr />
-                  <h2>with `render prop` pattern</h2>
-                  <FetchRenderProp url={url} />
+                    <hr />
+                    <h2>with `render prop` pattern</h2>
+                    <FetchRenderProp url={url} />
 
-                  <hr />
-                  <h2>with `HOC` pattern</h2>
-                  <FetchWithHOC url={url} />
+                    <hr />
+                    <h2>with `HOC` pattern</h2>
+                    <FetchWithHOC url={url} />
 
-                  <hr />
-                  <h2>with `Hook` pattern</h2>
-                  <FetchWithHook url={url} />
+                    <hr />
+                    <h2>with `Hook` pattern</h2>
+                    <FetchWithHook url={url} />
                   </>
                 )}
               />
@@ -113,9 +115,13 @@ export const App: React.FC = () => {
         </Responsive>
       </Content>
 
-      <Footer style={{
- textAlign: "center"
-}}>tmhao2005@gmail.com</Footer>
+      <Footer
+        style={{
+          textAlign: "center",
+        }}
+      >
+        tmhao2005@gmail.com
+      </Footer>
     </Layout>
   );
 };

@@ -7,9 +7,6 @@ import {
  userResolvers, futaResolvers
 } from "./resolvers/server";
 
-// Don't know why schema always be cached
-console.log(userSchema);
-
 export const schema = mergeSchemas({
   subschemas: [
     {

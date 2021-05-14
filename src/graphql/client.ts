@@ -51,7 +51,7 @@ export function buildClient(server: boolean) {
       errorLink,
       createHttpLink({
         uri: GRAPHQL,
-        credentials: "same-origin",
+        // credentials: "same-origin",
         headers: {},
         fetch: fetch as any,
       }),

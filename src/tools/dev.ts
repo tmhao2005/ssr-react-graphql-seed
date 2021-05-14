@@ -9,7 +9,7 @@ import serverConfig from "../webpack/server";
 import { spinner } from "../shared/spinner";
 
 (async () => {
-  spinner.start("Starting...");
+  spinner.start("building the app");
   await start();
   spinner.stop();
 })();
