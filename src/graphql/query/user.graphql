@@ -36,10 +36,15 @@ type Review {
   photos: [Photo]
 }
 
+type Report {
+  id: ID
+  survey: String
+}
+
 type Query {
   users(query: String): [User]
   user(id: Int): User
-  reviews(query: String): [Review]
+  reports(id: ID): [Report]
   review(id: Int): Review
   photos(id: ID): [Review]
 }

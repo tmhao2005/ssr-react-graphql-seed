@@ -34,7 +34,10 @@ app.use(express.static(path.join(__dirname, "/public")));
 // http://localhost:3000/static/assets/client.js
 app.use("/static", express.static(path.join(__dirname, "/public")));
 
-app.use("/favicon.ico", express.static(path.join(__dirname, "/public/assets/favicon.ico")));
+app.use(
+  "/favicon.ico",
+  express.static(path.join(__dirname, "/public/assets/favicon.ico"))
+);
 
 app.get("*", async (req, res, next) => {
   if (req.originalUrl.startsWith(`${server.graphqlPath}`)) {
@@ -58,7 +61,7 @@ app.get("*", async (req, res, next) => {
 
   const Root = (
     <ApolloProvider client={client}>
-      <StaticRouter location={req.url} context={routerContext} >
+      <StaticRouter location={req.url} context={routerContext}>
         <App />
       </StaticRouter>
     </ApolloProvider>
@@ -71,7 +74,7 @@ app.get("*", async (req, res, next) => {
   const render = ReactDOM.renderToString(Root);
   const { html: markup, css, ids } = extractCritical(render);
 
-  console.log(ids);
+  // console.log(ids);
 
   const html = ReactDOM.renderToStaticMarkup(
     <Html
@@ -100,7 +103,9 @@ const hot = !!module.hot;
 console.log("Check env variables:", process.env.PORT, process.env.FUTA_API);
 
 if (!hot) {
-  app.listen(process.env.PORT, () => console.log("The server is running on port %s", process.env.PORT));
+  app.listen(process.env.PORT, () =>
+    console.log("The server is running on port %s", process.env.PORT)
+  );
 }
 
 // For webpack-hot-server

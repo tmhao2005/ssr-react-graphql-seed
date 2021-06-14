@@ -16,8 +16,9 @@ fragment fieldsOnUser on User {
   id
   name
   login
+  status
   ratingCount
-  price
+  price  
 }
 
 query Photos($id: ID) {
@@ -35,5 +36,12 @@ query Photos($id: ID) {
         }
       }
     }
+  }
+}
+
+query Reports($id: ID) {
+  reports(id: $id) {
+    id,
+    survey
   }
 }

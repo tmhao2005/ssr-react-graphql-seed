@@ -19,8 +19,8 @@ export const userResolvers: IResolvers<any, DataSources> = {
       return await dataSources.gitAPI.getOne(id);
     },
 
-    reviews: async (_source, { query }, { dataSources }) => {
-      return dataSources.gitAPI.getReviews(query);
+    reports: async (_source, { id }, { dataSources }) => {
+      return dataSources.gitAPI.getReports(id);
     },
 
     review: async (_source, { id }, { dataSources }) => {
@@ -36,7 +36,11 @@ export const userResolvers: IResolvers<any, DataSources> = {
 export const futaResolvers: IResolvers<any, DataSources> = {
   Query: {
     route: async (_source, { payload }, { dataSources }) => {
-      return dataSources.futaAPI.queryRoute(payload.d1, payload.d2, payload.date);
+      return dataSources.futaAPI.queryRoute(
+        payload.d1,
+        payload.d2,
+        payload.date
+      );
     },
 
     timeTable: async (_source, { payload }, { dataSources }) => {

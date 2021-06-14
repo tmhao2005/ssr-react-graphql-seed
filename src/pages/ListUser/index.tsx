@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { Button, Drawer, List, PageHeader, Select, Space } from "antd";
+import { Button, Drawer, List, PageHeader, Select, Space, Tag } from "antd";
 import { UserItem } from "../../components/UserItem";
 import {
   QueryUsersQuery,
@@ -14,7 +14,8 @@ const Option = Select.Option;
 export const ListUser: React.FC<{}> = () => {
   const [offset, setOffset] = React.useState<number>(0);
   const [code, setCode] = React.useState<string>("Tân Phú");
-  const [chosenUser, setChosenUser] = React.useState<string>();
+  const [chosenUser, setChosenUser] = React.useState<number>();
+  const favourites = [41709, 41276, 35088, 40844];
 
   const urlMaker = (values?: any) => {
     const sp = new URLSearchParams({
@@ -61,6 +62,23 @@ export const ListUser: React.FC<{}> = () => {
           width: "100%",
         }}
       >
+        <div
+          style={{
+            paddingBottom: 20,
+          }}
+        >
+          {favourites.map((id) => (
+            <div
+              key={id}
+              style={{
+                display: "flex",
+              }}
+            >
+              <UserItem id={id} onClick={setChosenUser} />
+            </div>
+          ))}
+        </div>
+
         <Select
           defaultValue={code}
           style={{
@@ -77,13 +95,17 @@ export const ListUser: React.FC<{}> = () => {
           <Option value="Gò Vấp">QV</Option>
           <Option value="Bình Tân">BT</Option>
         </Select>
-
         {
           <List
             itemLayout="horizontal"
             dataSource={data ? data.users : []}
             renderItem={(item) => (
-              <UserItem key={item.id} user={item} onClick={setChosenUser} />
+              <UserItem
+                key={item.id}
+                id={item.id}
+                user={item}
+                onClick={setChosenUser}
+              />
             )}
             loading={loading}
             loadMore={
