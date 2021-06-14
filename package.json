@@ -101,7 +101,7 @@
     "apollo-link-error": "^1.1.13",
     "apollo-link-http": "^1.5.17",
     "apollo-link-schema": "^1.2.5",
-    "apollo-server": "^2.13.1",
+    "apollo-server": "^2.14.2",
     "apollo-server-express": "^2.14.2",
     "axios": "^0.21.1",
     "create-emotion-server": "^10.0.27",
